@@ -1,8 +1,13 @@
 import React from "react";
-import "./styles.css";
+
+import { FooterContainer } from "./styles";
 
 const Footer = () => {
-  return <footer className="footer">{new Date().getFullYear()}</footer>;
+  return (
+    <FooterContainer className="footer">
+      {new Date().getFullYear()}
+    </FooterContainer>
+  );
 };
 
 export default Footer;

@@ -25,7 +25,7 @@ function App() {
           <Recipe />
         </Route>
       </Switch>
-      {/* <Footer /> */}
+      <Footer />
     </BrowserRouter>
   );
 }

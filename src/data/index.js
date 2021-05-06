@@ -5,6 +5,7 @@ const recipes = [
   {
     id: 1,
     title: "Almôndegas Vegetarianas",
+    type: "carne",
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -52,6 +53,7 @@ const recipes = [
   {
     id: 2,
     title: "Almôndegas Vegetarianas",
+    type: "peixe",
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -99,6 +101,7 @@ const recipes = [
   {
     id: 3,
     title: "Almôndegas Vegetarianas",
+    type: "vegetariano",
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -146,6 +149,7 @@ const recipes = [
   {
     id: 4,
     title: "Almôndegas Vegetarianas",
+    type: "carne",
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -193,6 +197,7 @@ const recipes = [
   {
     id: 5,
     title: "Almôndegas Vegetarianas",
+    type: "carne",
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -240,6 +245,7 @@ const recipes = [
   {
     id: 6,
     title: "Almôndegas Vegetarianas",
+    type: "carne",
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
