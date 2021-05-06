@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const HomeContainer = styled.div`
+  height: calc(100vh - 25rem);
   margin-top: 10rem;
 
   display: grid;

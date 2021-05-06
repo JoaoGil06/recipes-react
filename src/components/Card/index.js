@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CutleryIcon from "../../assets/icons/cutlery.svg";
-import ShoppingCart from "../../assets/icons/shoppingcart.svg";
 
 import {
   CardContainer,
@@ -13,20 +12,18 @@ import {
   CardButtons,
 } from "./styles";
 
-const Card = ({ id, cardImage, title, type, gradient }) => {
+const Card = ({ id, cardImage, title, type, gradient, btnColor }) => {
   const [isCardHover, setIsCardHover] = useState(false);
-
-  console.log(cardImage);
 
   return (
     <CardContainer
       onMouseEnter={() => setIsCardHover(true)}
       onMouseLeave={() => setIsCardHover(false)}
     >
-      <CardImage>
+      <CardImage className="front">
         <img src={cardImage} alt={title} />
       </CardImage>
-      <CardInfo isCardHover={isCardHover} gradient={gradient}>
+      <CardInfo isCardHover={isCardHover} gradient={gradient} className="back">
         <CardInfoHeader>
           <h1>{type}</h1>
           <img src={CutleryIcon} alt="recipes" />
@@ -40,14 +37,12 @@ const Card = ({ id, cardImage, title, type, gradient }) => {
             dicta nemo nobis esse beatae pariatur.
           </p>
           <CardButtons>
-            <CardButton>
-              <Link to={`/recipes/${id}`}>
-                <img src={ShoppingCart} alt="Recipes Cart" />
-              </Link>
+            <CardButton color={btnColor}>
+              <Link to={`/recipes/${id}`}>Abrir Receita</Link>
             </CardButton>
 
-            <CardButton>
-              <Link to={`/recipes/${id}`}>Receita &#x2192;</Link>
+            <CardButton color={btnColor}>
+              <Link to={`/recipes/${id}`}>Adicionar ao carrinho</Link>
             </CardButton>
           </CardButtons>
         </CardInfoContent>

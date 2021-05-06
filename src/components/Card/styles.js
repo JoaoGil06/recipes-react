@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const CardContainer = styled.div`
   width: 30rem;
+  perspective: 150rem;
+  -moz-perspective: 150rem;
 
   display: flex;
   flex-direction: column;
@@ -9,6 +11,11 @@ export const CardContainer = styled.div`
   align-items: center;
 
   position: relative;
+  transition: all 0.8s;
+
+  &:hover {
+    transform: rotateY(180deg);
+  }
 `;
 export const CardImage = styled.div`
   img {
@@ -17,16 +24,15 @@ export const CardImage = styled.div`
   }
 `;
 export const CardInfo = styled.div`
-  color: #222222;
+  color: #fff;
   position: absolute;
 
   border-radius: 10px;
   display: flex;
   flex-direction: column;
 
-  /* display: none; */
+  display: none;
   transition: 1s;
-  /* background: #f9dc5c; */
   height: 100%;
   width: 100%;
 
@@ -34,8 +40,7 @@ export const CardInfo = styled.div`
     isCardHover &&
     `
     display: flex;
-
-      
+    transform: rotateY(180deg);
     `}
 
   background: ${(props) => props.gradient};
@@ -45,6 +50,7 @@ export const CardInfoHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 1.5rem 1.5rem 0 1.5rem;
 
   h1 {
     color: #fff;
@@ -66,7 +72,7 @@ export const CardInfoContent = styled.div`
 
   h1 {
     color: #fff;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   p {
@@ -74,30 +80,31 @@ export const CardInfoContent = styled.div`
     text-align: left;
     color: #fff;
     font-weight: 200;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-size: 1.1rem;
   }
 `;
 
 export const CardButtons = styled.div`
   width: 100%;
-
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 export const CardButton = styled.button`
   background: transparent;
-  border: 1px solid #222222;
+
   padding: 0.5rem 1rem;
   font-weight: 600;
   font-family: "Open Sans";
-  font-size: 1rem;
+  font-size: 1.1rem;
   transition: 0.5s;
+  border: 1px solid #fff;
+  border-radius: 5px;
 
   a {
     text-decoration: none;
-    color: #222222;
+    color: #fff;
 
     img {
       width: 2rem;
@@ -105,10 +112,10 @@ export const CardButton = styled.button`
   }
 
   &:hover {
-    background: #222222;
     cursor: pointer;
+    background: #fff;
     a {
-      color: #f9dc5c;
+      color: ${(props) => props.color};
     }
   }
 
