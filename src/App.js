@@ -9,6 +9,8 @@ import Recipe from "./pages/Recipe";
 import Footer from "./components/Footer";
 import Recipes from "./pages/Recipes";
 
+import { GlobalStyle } from "./styles/GlobalStyle";
+
 function App() {
   return (
     <BrowserRouter>
@@ -26,6 +28,7 @@ function App() {
         </Route>
       </Switch>
       <Footer />
+      <GlobalStyle />
     </BrowserRouter>
   );
 }

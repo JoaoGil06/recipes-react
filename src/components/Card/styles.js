@@ -43,7 +43,18 @@ export const CardInfo = styled.div`
     transform: rotateY(180deg);
     `}
 
-  background: ${(props) => props.gradient};
+  background: ${(props) => {
+    switch (props.category) {
+      case "carne":
+        return "var(--redGradient)";
+      case "peixe":
+        return "var(--blueGradient)";
+      case "vegetariano":
+        return "var(--greenGradient)";
+      default:
+        return "#fff";
+    }
+  }};
 `;
 
 export const CardInfoHeader = styled.div`
@@ -115,7 +126,18 @@ export const CardButton = styled.button`
     cursor: pointer;
     background: #fff;
     a {
-      color: ${(props) => props.color};
+      color: ${(props) => {
+        switch (props.category) {
+          case "carne":
+            return "var(--brilliantRose)";
+          case "peixe":
+            return "var(--fountainBlue)";
+          case "vegetariano":
+            return "var(--limeade)";
+          default:
+            return "var(--brilliantRose)";
+        }
+      }};
     }
   }
 

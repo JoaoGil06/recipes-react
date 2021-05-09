@@ -1,17 +1,26 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
-import { HeaderContainer, Title } from "./styles";
+import { HeaderContainer, Title, TabContainer, Tab, TabCircle } from "./styles";
 
-const Header = () => {
+const Header = ({ categories, filterRecipes }) => {
   return (
     <HeaderContainer>
       <Title>
-        <Link to="/">
-          <h1>Receitas dos Gil</h1>
-        </Link>
+        <h1>Receitas dos Gil</h1>
         <span className="underline"></span>
       </Title>
+      <TabContainer>
+        {categories.map((category, index) => (
+          <Tab
+            category={category}
+            onClick={() => filterRecipes(category)}
+            key={index}
+          >
+            <TabCircle category={category} />
+            {category}
+          </Tab>
+        ))}
+      </TabContainer>
     </HeaderContainer>
   );
 };
