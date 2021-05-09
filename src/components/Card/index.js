@@ -12,7 +12,7 @@ import {
   CardButtons,
 } from "./styles";
 
-const Card = ({ id, cardImage, title, type, gradient, btnColor }) => {
+const Card = ({ id, cardImage, title, category }) => {
   const [isCardHover, setIsCardHover] = useState(false);
 
   return (
@@ -23,9 +23,9 @@ const Card = ({ id, cardImage, title, type, gradient, btnColor }) => {
       <CardImage className="front">
         <img src={cardImage} alt={title} />
       </CardImage>
-      <CardInfo isCardHover={isCardHover} gradient={gradient} className="back">
+      <CardInfo isCardHover={isCardHover} category={category} className="back">
         <CardInfoHeader>
-          <h1>{type}</h1>
+          <h1>{category}</h1>
           <img src={CutleryIcon} alt="recipes" />
         </CardInfoHeader>
         <CardInfoContent>
@@ -37,11 +37,11 @@ const Card = ({ id, cardImage, title, type, gradient, btnColor }) => {
             dicta nemo nobis esse beatae pariatur.
           </p>
           <CardButtons>
-            <CardButton color={btnColor}>
+            <CardButton category={category}>
               <Link to={`/recipes/${id}`}>Abrir Receita</Link>
             </CardButton>
 
-            <CardButton color={btnColor}>
+            <CardButton category={category}>
               <Link to={`/recipes/${id}`}>Adicionar ao carrinho</Link>
             </CardButton>
           </CardButtons>
