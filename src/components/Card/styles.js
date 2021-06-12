@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const CardContainer = styled.div`
   width: 30rem;
@@ -45,11 +46,11 @@ export const CardInfo = styled.div`
 
   background: ${(props) => {
     switch (props.category) {
-      case "carne":
+      case RECIPES_TYPES.CARNE:
         return "var(--redGradient)";
-      case "peixe":
+      case RECIPES_TYPES.PEIXE:
         return "var(--blueGradient)";
-      case "vegetariano":
+      case RECIPES_TYPES.VEGETARIANO:
         return "var(--greenGradient)";
       default:
         return "#fff";
@@ -128,11 +129,11 @@ export const CardButton = styled.button`
     a {
       color: ${(props) => {
         switch (props.category) {
-          case "carne":
+          case RECIPES_TYPES.CARNE:
             return "var(--brilliantRose)";
-          case "peixe":
+          case RECIPES_TYPES.PEIXE:
             return "var(--fountainBlue)";
-          case "vegetariano":
+          case RECIPES_TYPES.VEGETARIANO:
             return "var(--limeade)";
           default:
             return "var(--brilliantRose)";

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const HeaderContainer = styled.header`
   padding: 2.5rem 0;
@@ -45,6 +46,34 @@ export const Tab = styled.div`
   padding: 0.5rem 1rem;
   border-radius: 1.5rem;
 
+  background: ${(props) => {
+    if (props.isActive && props.selectedCategory === RECIPES_TYPES.TODOS) {
+      return "#fff";
+    }
+
+    if (props.isActive && props.selectedCategory === RECIPES_TYPES.CARNE) {
+      return "var(--redGradient)";
+    }
+
+    if (props.isActive && props.selectedCategory === RECIPES_TYPES.PEIXE) {
+      return "var(--blueGradient)";
+    }
+
+    if (
+      props.isActive &&
+      props.selectedCategory === RECIPES_TYPES.VEGETARIANO
+    ) {
+      return "var(--greenGradient)";
+    }
+  }};
+
+  &:first-child {
+    color: ${(props) =>
+      props.isActive && props.selectedCategory === RECIPES_TYPES.TODOS
+        ? "#222"
+        : "#fff"};
+  }
+
   &:not(:last-child) {
     margin-right: 2rem;
   }
@@ -52,11 +81,11 @@ export const Tab = styled.div`
   &:hover {
     background: ${(props) => {
       switch (props.category) {
-        case "carne":
+        case RECIPES_TYPES.CARNE:
           return "var(--redGradient)";
-        case "peixe":
+        case RECIPES_TYPES.PEIXE:
           return "var(--blueGradient)";
-        case "vegetariano":
+        case RECIPES_TYPES.VEGETARIANO:
           return "var(--greenGradient)";
         default:
           return "#fff";
@@ -88,14 +117,27 @@ export const TabCircle = styled.span`
 
   background: ${(props) => {
     switch (props.category) {
-      case "carne":
+      case RECIPES_TYPES.CARNE:
         return "var(--redGradient)";
-      case "peixe":
+      case RECIPES_TYPES.PEIXE:
         return "var(--blueGradient)";
-      case "vegetariano":
+      case RECIPES_TYPES.VEGETARIANO:
         return "var(--greenGradient)";
       default:
         return "#fff";
     }
+  }};
+
+  background: ${(props) => {
+    let color;
+    if (props.isActive) {
+      color = "#fff";
+    }
+
+    if (props.isActive && props.selectedCategory === RECIPES_TYPES.TODOS) {
+      color = "#222";
+    }
+
+    return color;
   }};
 `;

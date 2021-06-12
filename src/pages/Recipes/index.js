@@ -1,33 +1,28 @@
-import React, { useState } from "react";
-import recipesData from "../../data";
+import React, { useEffect } from "react";
 
 import Header from "../../components/Header";
 import Card from "../../components/Card";
 import { RecipesContainer } from "./styles";
 
-const allCategories = [
-  "todos",
-  ...new Set(recipesData.map((recipe) => recipe.category)),
-];
-
-const teste = ["todos", "carne", "peixe", "vegetariano"];
+import { useSelector, useDispatch } from "react-redux";
+import * as recipesActions from "../../store/recipes/recipesActions";
 
 const Recipes = () => {
-  const [recipes, setRecipes] = useState(recipesData);
-  const [categories, setCategories] = useState(allCategories);
+  const { categories, recipes, recipeFilter } = useSelector(
+    (state) => state.recipes
+  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(recipesActions.getCategories());
+    dispatch(recipesActions.getRecipes());
+  }, [dispatch]);
 
   const filterRecipes = (category) => {
-    if (category === "todos") {
-      setRecipes(recipesData);
-      return;
-    }
-    const newRecipes = recipesData.filter(
-      (recipe) => recipe.category === category
-    );
-    setRecipes(newRecipes);
+    dispatch(recipesActions.filterRecipes(category));
   };
 
-  const renderCard = (recipes) => {
+  const renderCards = (recipes) => {
     const cards = recipes.map((recipe) => {
       return <Card key={recipe.id} {...recipe} category={recipe.category} />;
     });
@@ -35,13 +30,17 @@ const Recipes = () => {
   };
 
   const renderHeader = () => (
-    <Header categories={categories} filterRecipes={filterRecipes} />
+    <Header
+      categories={categories}
+      filterRecipes={filterRecipes}
+      selectedCategory={recipeFilter}
+    />
   );
 
   return (
     <>
       {renderHeader()}
-      <RecipesContainer>{renderCard(recipes)}</RecipesContainer>
+      <RecipesContainer>{renderCards(recipes)}</RecipesContainer>
     </>
   );
 };

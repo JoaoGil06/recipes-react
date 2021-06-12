@@ -6,10 +6,7 @@ import { RecipeContainer, Header, Ingredients, Steps } from "./styles";
 
 const Recipe = () => {
   const { id } = useParams();
-  const params = useLocation();
   const [recipe, setRecipe] = useState({});
-
-  console.log(params);
 
   useEffect(() => {
     const actualRecipe = recipesData.find((value) => value.id !== id);
