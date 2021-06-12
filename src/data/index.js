@@ -1,11 +1,12 @@
 import almondegas from "../assets/recipes/almondegas.jpg";
 import almondegasCard from "../assets/recipes/almondegasCard.jpg";
+import { RECIPES_TYPES } from "../constants/globalConstansts";
 
 const recipes = [
   {
     id: 1,
     title: "Almôndegas Vegetarianas",
-    category: "carne",
+    category: RECIPES_TYPES.CARNE,
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -53,7 +54,7 @@ const recipes = [
   {
     id: 2,
     title: "Almôndegas Vegetarianas",
-    category: "peixe",
+    category: RECIPES_TYPES.PEIXE,
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -101,7 +102,7 @@ const recipes = [
   {
     id: 3,
     title: "Almôndegas Vegetarianas",
-    category: "vegetariano",
+    category: RECIPES_TYPES.VEGETARIANO,
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -149,7 +150,7 @@ const recipes = [
   {
     id: 4,
     title: "Almôndegas Vegetarianas",
-    category: "carne",
+    category: RECIPES_TYPES.CARNE,
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -197,7 +198,7 @@ const recipes = [
   {
     id: 5,
     title: "Almôndegas Vegetarianas",
-    category: "carne",
+    category: RECIPES_TYPES.CARNE,
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [
@@ -245,7 +246,7 @@ const recipes = [
   {
     id: 6,
     title: "Almôndegas Vegetarianas",
-    category: "carne",
+    category: RECIPES_TYPES.PEIXE,
     image: almondegas,
     cardImage: almondegasCard,
     ingredients: [

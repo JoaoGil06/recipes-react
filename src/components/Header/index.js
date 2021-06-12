@@ -2,7 +2,8 @@ import React from "react";
 
 import { HeaderContainer, Title, TabContainer, Tab, TabCircle } from "./styles";
 
-const Header = ({ categories, filterRecipes }) => {
+const Header = ({ categories, filterRecipes, selectedCategory }) => {
+  console.log(selectedCategory);
   return (
     <HeaderContainer>
       <Title>
@@ -15,8 +16,14 @@ const Header = ({ categories, filterRecipes }) => {
             category={category}
             onClick={() => filterRecipes(category)}
             key={index}
+            isActive={category === selectedCategory}
+            selectedCategory={selectedCategory}
           >
-            <TabCircle category={category} />
+            <TabCircle
+              category={category}
+              isActive={category === selectedCategory}
+              selectedCategory={selectedCategory}
+            />
             {category}
           </Tab>
         ))}

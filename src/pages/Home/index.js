@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { Link } from "react-router-dom";
+
+import { useSelector, useDispatch } from "react-redux";
+import * as recipesActions from "../../store/recipes/recipesActions";
 
 import CutleryIcon from "../../assets/icons/cutlery.svg";
 import ShoppingCart from "../../assets/icons/shoppingcart.svg";
@@ -9,6 +12,14 @@ import HorizontalCard from "../../components/HorizontalCard";
 import { HomeContainer } from "./styles";
 
 const Home = () => {
+  const { recipes } = useSelector((state) => state.recipes);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(recipesActions.getRecipes());
+  }, [dispatch]);
+
   return (
     <HomeContainer>
       <Link to="/recipes">
@@ -19,7 +30,7 @@ const Home = () => {
           }}
           title="Receitas"
           icon={CutleryIcon}
-          quantity="10"
+          quantity={recipes.length}
           description="disponíveis"
         />
       </Link>
