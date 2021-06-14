@@ -24,7 +24,7 @@ const Header = ({ categories, filterRecipes, selectedCategory }) => {
               isActive={category === selectedCategory}
               selectedCategory={selectedCategory}
             />
-            {category}
+            <p>{category}</p>
           </Tab>
         ))}
       </TabContainer>
