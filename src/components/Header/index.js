@@ -3,7 +3,6 @@ import React from "react";
 import { HeaderContainer, Title, TabContainer, Tab, TabCircle } from "./styles";
 
 const Header = ({ categories, filterRecipes, selectedCategory }) => {
-  console.log(selectedCategory);
   return (
     <HeaderContainer>
       <Title>

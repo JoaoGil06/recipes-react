@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import recipesData from "../../data";
 
 import {
@@ -9,6 +9,7 @@ import {
   RecipePreparation,
   Ingredients,
   Steps,
+  AddButton,
 } from "./styles";
 
 const Recipe = () => {
@@ -18,7 +19,6 @@ const Recipe = () => {
   useEffect(() => {
     const actualRecipe = recipesData.find((value) => value.id !== id);
     setRecipe(actualRecipe);
-    console.log(actualRecipe);
   }, [id, setRecipe]);
 
   if (Object.keys(recipe).length === 0) {
@@ -59,6 +59,7 @@ const Recipe = () => {
           </Steps>
         </RecipePreparation>
       </RecipeMainContent>
+      <AddButton>Adicionar ao carrinho</AddButton>
     </RecipeContainer>
   );
 };

@@ -5,9 +5,10 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Recipe from "./pages/Recipe";
-import Footer from "./components/Footer";
 import Recipes from "./pages/Recipes";
+import Recipe from "./pages/Recipe";
+import Cart from "./pages/Cart";
+import Footer from "./components/Footer";
 
 import { GlobalStyle } from "./styles/GlobalStyle";
 
@@ -25,6 +26,9 @@ function App() {
         </Route>
         <Route path="/recipes/:id">
           <Recipe />
+        </Route>
+        <Route exact path="/cart">
+          <Cart />
         </Route>
       </Switch>
       <Footer />

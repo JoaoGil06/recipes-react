@@ -4,9 +4,11 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 /* Reducers */
 import recipesReducer from "./recipes/recipesReducer";
+import cartReducer from "./cart/cartReducer";
 
 const rootReducer = combineReducers({
   recipes: recipesReducer,
+  cart: cartReducer,
 });
 
 const store = createStore(

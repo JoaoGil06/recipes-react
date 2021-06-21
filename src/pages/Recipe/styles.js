@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const RecipeContainer = styled.div`
   display: flex;
@@ -60,5 +61,28 @@ export const Ingredients = styled.div`
 export const Steps = styled.div`
   li:not(:first-child) {
     margin-top: 0.5rem;
+  }
+`;
+
+export const AddButton = styled.button`
+  background: transparent;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-family: "Open Sans";
+  font-size: 1.1rem;
+  transition: 0.5s;
+  border: 1px solid #fff;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    background: #fff;
+
+    color: #222;
+  }
+
+  &:focus {
+    outline: none !important;
   }
 `;
