@@ -62,11 +62,7 @@ export const isLoadingCategories = (
 export const categories = (state = initialState.categories, action = {}) => {
   switch (action.type) {
     case actionTypes.GET_CATEGORIES_SUCCESS:
-      const allCategories = [
-        RECIPES_TYPES.TODOS,
-        ...new Set(action.payload.map((recipe) => recipe.category)),
-      ];
-      return allCategories;
+      return action.payload;
     default:
       return state;
   }
