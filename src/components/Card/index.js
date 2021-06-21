@@ -12,7 +12,13 @@ import {
   CardButtons,
 } from "./styles";
 
-const Card = ({ id, cardImage, title, category }) => {
+const Card = ({
+  id,
+  cardImage,
+  title,
+  category,
+  handleClickAddRecipeToCart,
+}) => {
   const [isCardHover, setIsCardHover] = useState(false);
 
   return (
@@ -42,7 +48,14 @@ const Card = ({ id, cardImage, title, category }) => {
             </CardButton>
 
             <CardButton category={category}>
-              <Link to={`/recipes/${id}`}>Adicionar ao carrinho</Link>
+              <Link
+                to={`/cart`}
+                onClick={() =>
+                  handleClickAddRecipeToCart({ id, title, category })
+                }
+              >
+                Adicionar ao carrinho
+              </Link>
             </CardButton>
           </CardButtons>
         </CardInfoContent>

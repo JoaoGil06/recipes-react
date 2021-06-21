@@ -6,6 +6,7 @@ import { RecipesContainer } from "./styles";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as recipesActions from "../../store/recipes/recipesActions";
+import * as cartActions from "../../store/cart/cartActions";
 
 const Recipes = () => {
   const { categories, recipes, recipeFilter } = useSelector(
@@ -22,9 +23,20 @@ const Recipes = () => {
     dispatch(recipesActions.filterRecipes(category));
   };
 
+  const handleClickAddRecipeToCart = (recipe) => {
+    dispatch(cartActions.addRecipeToCart(recipe));
+  };
+
   const renderCards = (recipes) => {
     const cards = recipes.map((recipe) => {
-      return <Card key={recipe.id} {...recipe} category={recipe.category} />;
+      return (
+        <Card
+          key={recipe.id}
+          {...recipe}
+          category={recipe.category}
+          handleClickAddRecipeToCart={handleClickAddRecipeToCart}
+        />
+      );
     });
     return cards;
   };

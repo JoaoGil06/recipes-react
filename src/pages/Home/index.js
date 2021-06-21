@@ -13,6 +13,7 @@ import { HomeContainer } from "./styles";
 
 const Home = () => {
   const { recipes } = useSelector((state) => state.recipes);
+  const { cart } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
@@ -42,7 +43,7 @@ const Home = () => {
           }}
           title="Carrinho"
           icon={ShoppingCart}
-          quantity="05"
+          quantity={cart.length}
           description="adicionadas"
         />
       </Link>
