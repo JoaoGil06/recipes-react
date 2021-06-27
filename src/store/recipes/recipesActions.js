@@ -1,8 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./recipesActionTypes";
 
-/* Recipes */
-import recipesData from "../../data";
 import { db } from "../../firebase";
 
 export const getRecipesStart = () => {
@@ -27,6 +25,18 @@ export const getCategoriesSuccess = (recipes) => {
 
 export const getCategoriesFail = (error) => {
   return { type: actionTypes.GET_CATEGORIES_FAIL, payload: error };
+};
+
+export const getRecipeStart = () => {
+  return { type: actionTypes.GET_RECIPE_START };
+};
+
+export const getRecipeSuccess = (recipe) => {
+  return { type: actionTypes.GET_RECIPE_SUCCESS, payload: recipe };
+};
+
+export const getRecipeFail = (error) => {
+  return { type: actionTypes.GET_RECIPE_FAIL, payload: error };
 };
 
 export const getRecipesCountStart = () => {
@@ -58,18 +68,46 @@ export const getCategories = () => async (dispatch) => {
   }
 };
 
-export const getRecipes = () => async (dispatch) => {
+const isRecipeInCart = (recipeId, cart) => {
+  return cart.some((cartItem) => cartItem.id === recipeId);
+};
+
+export const getRecipes = () => async (dispatch, getState) => {
   try {
+    const { cart } = getState().cart;
     dispatch(getRecipesStart());
     const snapshot = await db.collection("recipes").get();
     const recipes = snapshot.docs.map((recipe) => {
-      return { ...recipe.data(), id: recipe.id };
+      const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
+
+      return {
+        ...recipe.data(),
+        id: recipe.id,
+        isRecipeInCart: IS_RECIPE_IN_CART,
+      };
     });
     dispatch(getRecipesSuccess(recipes));
 
     return recipes;
   } catch (error) {
     dispatch(getRecipesFail(error));
+  }
+};
+
+export const getRecipe = (id) => async (dispatch, getState) => {
+  try {
+    const { cart } = getState().cart;
+    dispatch(getRecipeStart());
+
+    const snapshot = await db.collection("recipes").doc(id).get();
+    const recipe = snapshot.data();
+    const IS_RECIPE_IN_CART = isRecipeInCart(id, cart);
+
+    dispatch(
+      getRecipeSuccess({ ...recipe, isRecipeInCart: IS_RECIPE_IN_CART, id })
+    );
+  } catch (error) {
+    dispatch(getRecipeFail(error));
   }
 };
 

@@ -19,3 +19,13 @@ export const deleteCartRecipe = (recipeId) => {
     dispatch(deleteRecipeFromCartSuccess(recipeId));
   };
 };
+
+export const cleanCartSuccess = () => {
+  return { type: actionTypes.CLEAN_CART };
+};
+
+export const cleanCart = () => {
+  return (dispatch) => {
+    dispatch(cleanCartSuccess());
+  };
+};

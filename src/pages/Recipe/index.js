@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import recipesData from "../../data";
+
+import { useSelector, useDispatch } from "react-redux";
+
+import * as recipesActions from "../../store/recipes/recipesActions";
+import * as cartActions from "../../store/cart/cartActions";
 
 import {
   RecipeContainer,
@@ -9,21 +14,31 @@ import {
   RecipePreparation,
   Ingredients,
   Steps,
-  AddButton,
+  Button,
 } from "./styles";
 
 const Recipe = () => {
   const { id } = useParams();
-  const [recipe, setRecipe] = useState({});
+  const { recipe } = useSelector((state) => state.recipes);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
-    const actualRecipe = recipesData.find((value) => value.id !== id);
-    setRecipe(actualRecipe);
-  }, [id, setRecipe]);
+    dispatch(recipesActions.getRecipe(id));
+  }, [id, dispatch]);
+
+  const handleClickAddOrRemoveRecipeToCart = () => {
+    recipe.isRecipeInCart
+      ? dispatch(cartActions.deleteCartRecipe(recipe.id))
+      : dispatch(cartActions.addRecipeToCart({ ...recipe, id: id }));
+
+    history.push("/cart");
+  };
 
   if (Object.keys(recipe).length === 0) {
     return <>Loading...</>;
   }
+
   return (
     <RecipeContainer>
       <Header>
@@ -38,28 +53,32 @@ const Recipe = () => {
       </Header>
       <RecipeMainContent>
         <div className="recipe__image">
-          <img src={recipe.image} alt={recipe.title} />
+          <img src={`../${recipe.image}`} alt={recipe.title} />
         </div>
         <RecipePreparation>
           <Ingredients>
             <h3>Ingredientes:</h3>
             <ol>
-              {recipe.ingredients.map((ingredient) => {
-                return <li key={ingredient.id}>{ingredient.value}</li>;
+              {recipe.ingredients.map((ingredient, index) => {
+                return <li key={index}>{ingredient}</li>;
               })}
             </ol>
           </Ingredients>
           <Steps>
             <h3>Modo de Preparação:</h3>
             <ol>
-              {recipe.preparationSetps.map((step) => {
-                return <li key={step.id}>{step.value}</li>;
+              {recipe.preparationSteps.map((step, index) => {
+                return <li key={index}>{step}</li>;
               })}
             </ol>
           </Steps>
         </RecipePreparation>
       </RecipeMainContent>
-      <AddButton>Adicionar ao carrinho</AddButton>
+      <Button onClick={handleClickAddOrRemoveRecipeToCart}>
+        {recipe.isRecipeInCart
+          ? "Remover do carrinho"
+          : "Adicionar ao carrinho"}
+      </Button>
     </RecipeContainer>
   );
 };

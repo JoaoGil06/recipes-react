@@ -12,6 +12,7 @@ const Recipes = () => {
   const { categories, recipes, recipeFilter } = useSelector(
     (state) => state.recipes
   );
+  const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,23 +24,30 @@ const Recipes = () => {
     dispatch(recipesActions.filterRecipes(category));
   };
 
-  const handleClickAddRecipeToCart = (recipe) => {
-    dispatch(cartActions.addRecipeToCart(recipe));
+  const handleClickAddOrRemoveRecipeToCart = (recipe, isRecipeInCart) => {
+    isRecipeInCart
+      ? dispatch(cartActions.deleteCartRecipe(recipe.id))
+      : dispatch(cartActions.addRecipeToCart(recipe));
   };
 
-  const renderCards = (recipes) => {
-    const cards = recipes.map((recipe) => {
+  const renderCards = (recipes) =>
+    recipes.map((recipe) => {
       return (
         <Card
           key={recipe.id}
-          {...recipe}
+          id={recipe.id}
+          image={recipe.image}
+          title={recipe.title}
+          description={recipe.description}
           category={recipe.category}
-          handleClickAddRecipeToCart={handleClickAddRecipeToCart}
+          ingredients={recipe.ingredients}
+          handleClickAddOrRemoveRecipeToCart={
+            handleClickAddOrRemoveRecipeToCart
+          }
+          isRecipeInCart={recipe.isRecipeInCart}
         />
       );
     });
-    return cards;
-  };
 
   const renderHeader = () => (
     <Header

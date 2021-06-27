@@ -80,10 +80,20 @@ export const recipeFilter = (
   }
 };
 
+export const recipe = (state = initialState.recipe, action = {}) => {
+  switch (action.type) {
+    case actionTypes.GET_RECIPE_SUCCESS:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   isLoadingRecipes,
   recipes,
   isLoadingCategories,
   categories,
   recipeFilter,
+  recipe,
 });

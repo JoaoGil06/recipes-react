@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CutleryIcon from "../../assets/icons/cutlery.svg";
 
+import { useSelector, useDisptach } from "react-redux";
+
 import {
   CardContainer,
   CardImage,
@@ -14,10 +16,13 @@ import {
 
 const Card = ({
   id,
-  cardImage,
+  image,
   title,
   category,
-  handleClickAddRecipeToCart,
+  description,
+  ingredients,
+  handleClickAddOrRemoveRecipeToCart,
+  isRecipeInCart,
 }) => {
   const [isCardHover, setIsCardHover] = useState(false);
 
@@ -27,7 +32,7 @@ const Card = ({
       onMouseLeave={() => setIsCardHover(false)}
     >
       <CardImage className="front">
-        <img src={cardImage} alt={title} />
+        <img src={image} alt={title} />
       </CardImage>
       <CardInfo isCardHover={isCardHover} category={category} className="back">
         <CardInfoHeader>
@@ -36,12 +41,7 @@ const Card = ({
         </CardInfoHeader>
         <CardInfoContent>
           <h1>{title}</h1>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Consectetur, voluptatibus accusamus. Esse quisquam sunt, delectus a
-            alias labore provident cupiditate est reprehenderit porro! Velit,
-            dicta nemo nobis esse beatae pariatur.
-          </p>
+          <p>{description}</p>
           <CardButtons>
             <CardButton category={category}>
               <Link to={`/recipes/${id}`}>Abrir Receita</Link>
@@ -51,10 +51,22 @@ const Card = ({
               <Link
                 to={`/cart`}
                 onClick={() =>
-                  handleClickAddRecipeToCart({ id, title, category })
+                  handleClickAddOrRemoveRecipeToCart(
+                    {
+                      id,
+                      title,
+                      category,
+                      ingredients,
+                      description,
+                      image,
+                    },
+                    isRecipeInCart
+                  )
                 }
               >
-                Adicionar ao carrinho
+                {!isRecipeInCart
+                  ? "Adicionar ao carrinho"
+                  : "Remover do carrinho"}
               </Link>
             </CardButton>
           </CardButtons>
