@@ -1,8 +1,7 @@
 import axios from "axios";
 import * as actionTypes from "./recipesActionTypes";
 
-/* Recipes */
-import recipesData from "../../data";
+import { db } from "../../firebase";
 
 export const getRecipesStart = () => {
   return { type: actionTypes.GET_RECIPES_START };
@@ -28,6 +27,18 @@ export const getCategoriesFail = (error) => {
   return { type: actionTypes.GET_CATEGORIES_FAIL, payload: error };
 };
 
+export const getRecipeStart = () => {
+  return { type: actionTypes.GET_RECIPE_START };
+};
+
+export const getRecipeSuccess = (recipe) => {
+  return { type: actionTypes.GET_RECIPE_SUCCESS, payload: recipe };
+};
+
+export const getRecipeFail = (error) => {
+  return { type: actionTypes.GET_RECIPE_FAIL, payload: error };
+};
+
 export const getRecipesCountStart = () => {
   return { type: actionTypes.GET_RECIPES_COUNT_START };
 };
@@ -40,44 +51,78 @@ export const updateFilter = (recipes, filterType) => {
   return { type: actionTypes.UPDATE_FILTER, payload: { recipes, filterType } };
 };
 
-export const getCategories = () => {
-  return (dispatch) => {
+export const getCategories = () => async (dispatch) => {
+  try {
     dispatch(getCategoriesStart());
-    dispatch(getCategoriesSuccess(recipesData));
-    // dispatch(getCategoriesFail("error"));
-  };
+    const snapshot = await db.collection("categories").get();
+    const categories = snapshot.docs
+      .map((category) => category.data())
+      .map((category) => category.categories)
+      .flat();
+
+    dispatch(getCategoriesSuccess(categories));
+
+    return categories;
+  } catch (error) {
+    dispatch(getCategoriesFail(error));
+  }
 };
 
-export const getRecipes = () => {
-  return (dispatch) => {
+const isRecipeInCart = (recipeId, cart) => {
+  return cart.some((cartItem) => cartItem.id === recipeId);
+};
+
+export const getRecipes = () => async (dispatch, getState) => {
+  try {
+    const { cart } = getState().cart;
     dispatch(getRecipesStart());
-    dispatch(getRecipesSuccess(recipesData));
-    // dispatch(getRecipesFail("error"));
+    const snapshot = await db.collection("recipes").get();
+    const recipes = snapshot.docs.map((recipe) => {
+      const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
 
-    // axios
-    //   .get("https://jsonplaceholder.typicode.com/posts")
-    //   .then((response) => {
-    //     const recipes = response.data;
-    //     dispatch(getRecipesSuccess(recipes));
-    //   })
-    //   .catch((error) => {
-    //     const errorMsg = error.message;
-    //     dispatch(getRecipesFail(errorMsg));
-    //   });
-  };
+      return {
+        ...recipe.data(),
+        id: recipe.id,
+        isRecipeInCart: IS_RECIPE_IN_CART,
+      };
+    });
+    dispatch(getRecipesSuccess(recipes));
+
+    return recipes;
+  } catch (error) {
+    dispatch(getRecipesFail(error));
+  }
 };
 
-export const getRecipesCount = () => {
-  return (dispatch) => {
+export const getRecipe = (id) => async (dispatch, getState) => {
+  try {
+    const { cart } = getState().cart;
+    dispatch(getRecipeStart());
+
+    const snapshot = await db.collection("recipes").doc(id).get();
+    const recipe = snapshot.data();
+    const IS_RECIPE_IN_CART = isRecipeInCart(id, cart);
+
+    dispatch(
+      getRecipeSuccess({ ...recipe, isRecipeInCart: IS_RECIPE_IN_CART, id })
+    );
+  } catch (error) {
+    dispatch(getRecipeFail(error));
+  }
+};
+
+export const getRecipesCount = () => async (dispatch) => {
+  try {
     dispatch(getRecipesCountStart());
-    dispatch(getRecipesCountSuccess(recipesData));
-  };
+
+    const recipes = await dispatch(getRecipes());
+    dispatch(getRecipesCountSuccess(recipes.length));
+  } catch (error) {}
 };
 
-export const filterRecipes = (filterType) => {
-  return (dispatch) => {
-    const recipes = recipesData;
-
+export const filterRecipes = (filterType) => async (dispatch) => {
+  try {
+    const recipes = await dispatch(getRecipes());
     dispatch(updateFilter(recipes, filterType));
-  };
+  } catch (error) {}
 };

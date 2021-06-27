@@ -3,6 +3,7 @@ import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const CardContainer = styled.div`
   width: 30rem;
+  height: 45rem;
   perspective: 150rem;
   -moz-perspective: 150rem;
 
@@ -19,8 +20,11 @@ export const CardContainer = styled.div`
   }
 `;
 export const CardImage = styled.div`
+  height: 100%;
   img {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     border-radius: 10px;
   }
 `;

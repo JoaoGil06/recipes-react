@@ -4,6 +4,7 @@ const initialState = {
   isLoadingRecipes: false,
   isLoadingCategories: false,
   recipeFilter: "todos",
+  recipe: {},
 };
 
 export default initialState;

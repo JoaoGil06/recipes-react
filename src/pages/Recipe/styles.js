@@ -64,7 +64,7 @@ export const Steps = styled.div`
   }
 `;
 
-export const AddButton = styled.button`
+export const Button = styled.button`
   background: transparent;
   color: #fff;
   padding: 0.5rem 1rem;

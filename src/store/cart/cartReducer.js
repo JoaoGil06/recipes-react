@@ -10,6 +10,8 @@ export const cart = (state = initialState.cart, action = {}) => {
     case actionTypes.REMOVE_RECIPE_FROM_CART:
       const filteredCart = state.filter((item) => item.id !== action.payload);
       return filteredCart;
+    case actionTypes.CLEAN_CART:
+      return [];
     default:
       return state;
   }
