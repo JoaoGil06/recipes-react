@@ -45,3 +45,36 @@ export const ModalList = styled.ul`
     font-size: 1.2rem;
   }
 `;
+
+export const CopyButton = styled.button`
+  background: transparent;
+  color: #000;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-family: "Open Sans";
+  font-size: 1.1rem;
+  transition: 0.5s;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-top: 2.5rem;
+
+  &:hover {
+    cursor: pointer;
+    background: #000;
+
+    color: #fff;
+  }
+
+  &:focus {
+    outline: none !important;
+  }
+`;
+
+export const ModalCloseButton = styled.div`
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  cursor: pointer;
+  font-family: "Open Sans";
+  font-weight: bold;
+`;
