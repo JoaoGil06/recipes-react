@@ -129,7 +129,9 @@ const Cart = () => {
   return (
     <CartPageContainer>
       {renderCartHeader()}
-      <CartContainer>{renderCart()}</CartContainer>
+      <CartContainer isMoreThanOne={cart.length > 1}>
+        {renderCart()}
+      </CartContainer>
       {renderCardButtons()}
       {showModal && renderModal()}
     </CartPageContainer>

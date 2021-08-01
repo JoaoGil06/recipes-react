@@ -87,9 +87,9 @@ export const getRecipes = () => async (dispatch, getState) => {
       };
     });
     dispatch(getRecipesSuccess(recipes));
-
     return recipes;
   } catch (error) {
+    console.log(error);
     dispatch(getRecipesFail(error));
   }
 };

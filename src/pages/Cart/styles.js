@@ -27,9 +27,10 @@ export const SummaryCategory = styled.div`
 
 export const CartContainer = styled.div`
   display: grid;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: 5rem;
+  grid-template-columns: repeat(2, auto);
+  column-gap: ${(props) => {
+    return props.isMoreThanOne ? "5rem" : "0";
+  }};
 `;
 
 export const CartItem = styled.div`
@@ -115,6 +116,9 @@ export const CartItemDelete = styled.div`
   position: absolute;
   top: 1rem;
   right: 2rem;
+  cursor: pointer;
+  font-family: "Open Sans";
+  font-weight: bold;
 `;
 
 export const CartButtons = styled.div`
