@@ -1,14 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import Header from "../../components/Header";
 import Card from "../../components/Card";
-import { RecipesContainer } from "./styles";
+
+import { RecipesContainer, EndLoaderMessage } from "./styles";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as recipesActions from "../../store/recipes/recipesActions";
 import * as cartActions from "../../store/cart/cartActions";
+import InfiniteScroll from "react-infinite-scroll-component";
+
+const styleCardsObj = {
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 1fr)",
+  columnGap: "1rem",
+  rowGap: "1.5rem",
+  justifyItems: "center",
+};
 
 const Recipes = () => {
+  const [limit, setLimit] = useState(6);
   const { categories, recipes, recipeFilter } = useSelector(
     (state) => state.recipes
   );
@@ -17,12 +28,15 @@ const Recipes = () => {
 
   useEffect(() => {
     dispatch(recipesActions.getCategories());
-    dispatch(recipesActions.getRecipes());
-  }, [dispatch]);
+    dispatch(recipesActions.getRecipes(recipeFilter, limit));
+  }, [dispatch, limit, recipeFilter]);
 
-  const filterRecipes = (category) => {
-    dispatch(recipesActions.filterRecipes(category));
-  };
+  const filterRecipes = useCallback(
+    (category) => {
+      dispatch(recipesActions.getRecipes(category, limit));
+    },
+    [dispatch, limit]
+  );
 
   const handleClickAddOrRemoveRecipeToCart = (recipe, isRecipeInCart) => {
     isRecipeInCart
@@ -30,24 +44,37 @@ const Recipes = () => {
       : dispatch(cartActions.addRecipeToCart(recipe));
   };
 
-  const renderCards = (recipes) =>
-    recipes.map((recipe) => {
-      return (
-        <Card
-          key={recipe.id}
-          id={recipe.id}
-          image={recipe.image}
-          title={recipe.title}
-          description={recipe.description}
-          category={recipe.category}
-          ingredients={recipe.ingredients}
-          handleClickAddOrRemoveRecipeToCart={
-            handleClickAddOrRemoveRecipeToCart
-          }
-          isRecipeInCart={recipe.isRecipeInCart}
-        />
-      );
-    });
+  const renderCards = (recipes, totalRecipes) => {
+    console.log("recipes", recipes);
+    console.log("limit", limit);
+    return (
+      <InfiniteScroll
+        style={styleCardsObj}
+        dataLength={recipes.length}
+        next={() => setLimit(limit + 3)}
+        hasMore={recipes.length < totalRecipes}
+        loader={<h4>A Carregar...</h4>}
+      >
+        {recipes.map((recipe) => {
+          return (
+            <Card
+              key={recipe.id}
+              id={recipe.id}
+              image={recipe.image}
+              title={recipe.title}
+              description={recipe.description}
+              category={recipe.category}
+              ingredients={recipe.ingredients}
+              handleClickAddOrRemoveRecipeToCart={
+                handleClickAddOrRemoveRecipeToCart
+              }
+              isRecipeInCart={recipe.isRecipeInCart}
+            />
+          );
+        })}
+      </InfiniteScroll>
+    );
+  };
 
   const renderHeader = () => (
     <Header
@@ -60,7 +87,14 @@ const Recipes = () => {
   return (
     <>
       {renderHeader()}
-      <RecipesContainer>{renderCards(recipes)}</RecipesContainer>
+      <RecipesContainer>
+        {recipes.values && renderCards(recipes.values, recipes.total)}
+      </RecipesContainer>
+      {recipes.values?.length === recipes.total ? (
+        <EndLoaderMessage>Não existem mais receitas</EndLoaderMessage>
+      ) : (
+        ""
+      )}
     </>
   );
 };

@@ -12,13 +12,14 @@ import HorizontalCard from "../../components/HorizontalCard";
 import { HomeContainer } from "./styles";
 
 const Home = () => {
-  const { recipes } = useSelector((state) => state.recipes);
+  const { totalRecipes } = useSelector((state) => state.recipes);
+  useSelector((state) => console.log(state));
   const { cart } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(recipesActions.getRecipes());
+    dispatch(recipesActions.getTotalRecipesCount());
   }, [dispatch]);
 
   return (
@@ -31,7 +32,7 @@ const Home = () => {
           }}
           title="Receitas"
           icon={CutleryIcon}
-          quantity={recipes.length}
+          quantity={totalRecipes}
           description="disponíveis"
         />
       </Link>

@@ -1,5 +1,6 @@
 const initialState = {
-  recipes: [],
+  recipes: {},
+  totalRecipes: 0,
   categories: [],
   isLoadingRecipes: false,
   isLoadingCategories: false,
