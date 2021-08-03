@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 export const RecipesContainer = styled.main`
-  height: calc(100vh - 30rem);
+  min-height: calc(100vh - 30rem);
+`;
 
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 1rem;
-  row-gap: 1.5rem;
-  justify-items: center;
+export const EndLoaderMessage = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 `;

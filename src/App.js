@@ -31,7 +31,6 @@ function App() {
           <Cart />
         </Route>
       </Switch>
-      <Footer />
       <GlobalStyle />
     </BrowserRouter>
   );

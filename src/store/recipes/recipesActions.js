@@ -2,13 +2,17 @@ import axios from "axios";
 import * as actionTypes from "./recipesActionTypes";
 
 import { db } from "../../firebase";
+import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const getRecipesStart = () => {
   return { type: actionTypes.GET_RECIPES_START };
 };
 
-export const getRecipesSuccess = (recipes) => {
-  return { type: actionTypes.GET_RECIPES_SUCCESS, payload: recipes };
+export const getRecipesSuccess = (recipes, totalRecipes) => {
+  return {
+    type: actionTypes.GET_RECIPES_SUCCESS,
+    payload: { recipes, totalRecipes },
+  };
 };
 
 export const getRecipesFail = (error) => {
@@ -20,7 +24,10 @@ export const getCategoriesStart = () => {
 };
 
 export const getCategoriesSuccess = (recipes) => {
-  return { type: actionTypes.GET_CATEGORIES_SUCCESS, payload: recipes };
+  return {
+    type: actionTypes.GET_CATEGORIES_SUCCESS,
+    payload: recipes,
+  };
 };
 
 export const getCategoriesFail = (error) => {
@@ -47,8 +54,8 @@ export const getRecipesCountSuccess = (recipes) => {
   return { type: actionTypes.GET_RECIPES_COUNT_SUCCESS, payload: recipes };
 };
 
-export const updateFilter = (recipes, filterType) => {
-  return { type: actionTypes.UPDATE_FILTER, payload: { recipes, filterType } };
+export const updateFilter = (filterType) => {
+  return { type: actionTypes.UPDATE_FILTER, payload: filterType };
 };
 
 export const getCategories = () => async (dispatch) => {
@@ -72,27 +79,72 @@ const isRecipeInCart = (recipeId, cart) => {
   return cart.some((cartItem) => cartItem.id === recipeId);
 };
 
-export const getRecipes = () => async (dispatch, getState) => {
-  try {
-    const { cart } = getState().cart;
-    dispatch(getRecipesStart());
-    const snapshot = await db.collection("recipes").get();
-    const recipes = snapshot.docs.map((recipe) => {
-      const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
+const getRecipesCount =
+  (filterType = RECIPES_TYPES.TODOS) =>
+  async (dispatch, getState) => {
+    try {
+      const { cart } = getState().cart;
+      let snapshot = [];
 
-      return {
-        ...recipe.data(),
-        id: recipe.id,
-        isRecipeInCart: IS_RECIPE_IN_CART,
-      };
-    });
-    dispatch(getRecipesSuccess(recipes));
-    return recipes;
-  } catch (error) {
-    console.log(error);
-    dispatch(getRecipesFail(error));
-  }
-};
+      if (filterType !== RECIPES_TYPES.TODOS) {
+        snapshot = await db
+          .collection("recipes")
+          .where("category", "==", filterType)
+          .get();
+      } else {
+        snapshot = await db.collection("recipes").get();
+      }
+      const recipes = snapshot.docs.map((recipe) => {
+        const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
+        return {
+          ...recipe.data(),
+          id: recipe.id,
+          isRecipeInCart: IS_RECIPE_IN_CART,
+        };
+      });
+
+      return recipes.length;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+export const getRecipes =
+  (filterType = RECIPES_TYPES.TODOS, limit) =>
+  async (dispatch, getState) => {
+    try {
+      const { cart } = getState().cart;
+      dispatch(getRecipesStart());
+      let snapshot = [];
+      const totalRecipes = await dispatch(getRecipesCount(filterType));
+
+      if (filterType !== RECIPES_TYPES.TODOS) {
+        snapshot = await db
+          .collection("recipes")
+          .where("category", "==", filterType)
+          .limit(limit)
+          .get();
+      } else {
+        snapshot = await db.collection("recipes").limit(limit).get();
+      }
+      const recipes = snapshot.docs.map((recipe) => {
+        const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
+        return {
+          ...recipe.data(),
+          id: recipe.id,
+          isRecipeInCart: IS_RECIPE_IN_CART,
+        };
+      });
+      console.log("totalRecipes", totalRecipes);
+      dispatch(getRecipesSuccess(recipes, totalRecipes));
+      dispatch(updateFilter(filterType));
+
+      return recipes;
+    } catch (error) {
+      console.log(error);
+      dispatch(getRecipesFail(error));
+    }
+  };
 
 export const getRecipe = (id) => async (dispatch, getState) => {
   try {
@@ -111,18 +163,12 @@ export const getRecipe = (id) => async (dispatch, getState) => {
   }
 };
 
-export const getRecipesCount = () => async (dispatch) => {
+export const getTotalRecipesCount = () => async (dispatch) => {
   try {
     dispatch(getRecipesCountStart());
 
-    const recipes = await dispatch(getRecipes());
+    const snapshot = await db.collection("recipes").get();
+    const recipes = snapshot.docs;
     dispatch(getRecipesCountSuccess(recipes.length));
-  } catch (error) {}
-};
-
-export const filterRecipes = (filterType) => async (dispatch) => {
-  try {
-    const recipes = await dispatch(getRecipes());
-    dispatch(updateFilter(recipes, filterType));
   } catch (error) {}
 };

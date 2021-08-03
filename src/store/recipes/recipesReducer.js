@@ -2,7 +2,6 @@ import * as actionTypes from "./recipesActionTypes";
 import initialState from "./recipesInitialState";
 
 import { combineReducers } from "redux";
-import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const isLoadingRecipes = (
   state = initialState.isLoadingRecipes,
@@ -25,19 +24,22 @@ export const isLoadingRecipes = (
 export const recipes = (state = initialState.recipes, action = {}) => {
   switch (action.type) {
     case actionTypes.GET_RECIPES_SUCCESS:
+      return {
+        values: action.payload.recipes,
+        total: action.payload.totalRecipes,
+      };
+    default:
+      return state;
+  }
+};
+
+export const recipesCount = (
+  state = initialState.totalRecipes,
+  action = {}
+) => {
+  switch (action.type) {
+    case actionTypes.GET_RECIPES_COUNT_SUCCESS:
       return action.payload;
-    case actionTypes.UPDATE_FILTER:
-      const { recipes, filterType } = action.payload;
-
-      if (filterType === RECIPES_TYPES.TODOS) {
-        return recipes;
-      }
-
-      const newRecipes = recipes.filter(
-        (recipe) => recipe.category === filterType
-      );
-
-      return newRecipes;
     default:
       return state;
   }
@@ -74,7 +76,7 @@ export const recipeFilter = (
 ) => {
   switch (action.type) {
     case actionTypes.UPDATE_FILTER:
-      return action.payload.filterType;
+      return action.payload;
     default:
       return state;
   }
@@ -91,6 +93,7 @@ export const recipe = (state = initialState.recipe, action = {}) => {
 
 export default combineReducers({
   isLoadingRecipes,
+  totalRecipes: recipesCount,
   recipes,
   isLoadingCategories,
   categories,

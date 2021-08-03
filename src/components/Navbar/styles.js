@@ -6,6 +6,7 @@ export const NavbarContainer = styled.nav`
   align-items: center;
   justify-content: space-between;
   padding: 0 5rem 0 5rem;
+  background: #3a3a3a;
 `;
 export const NavbarLogo = styled.div`
   font-size: 2rem;
