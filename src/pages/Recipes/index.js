@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import * as recipesActions from "../../store/recipes/recipesActions";
 import * as cartActions from "../../store/cart/cartActions";
 import InfiniteScroll from "react-infinite-scroll-component";
+import Search from "../../components/Search";
 
 const styleCardsObj = {
   display: "grid",
@@ -45,8 +46,6 @@ const Recipes = () => {
   };
 
   const renderCards = (recipes, totalRecipes) => {
-    console.log("recipes", recipes);
-    console.log("limit", limit);
     return (
       <InfiniteScroll
         style={styleCardsObj}
@@ -87,6 +86,7 @@ const Recipes = () => {
   return (
     <>
       {renderHeader()}
+      <Search handleSearch={recipesActions.searchRecipes} />
       <RecipesContainer>
         {recipes.values && renderCards(recipes.values, recipes.total)}
       </RecipesContainer>

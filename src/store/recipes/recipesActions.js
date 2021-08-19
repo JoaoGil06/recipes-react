@@ -135,7 +135,6 @@ export const getRecipes =
           isRecipeInCart: IS_RECIPE_IN_CART,
         };
       });
-      console.log("totalRecipes", totalRecipes);
       dispatch(getRecipesSuccess(recipes, totalRecipes));
       dispatch(updateFilter(filterType));
 
@@ -171,4 +170,19 @@ export const getTotalRecipesCount = () => async (dispatch) => {
     const recipes = snapshot.docs;
     dispatch(getRecipesCountSuccess(recipes.length));
   } catch (error) {}
+};
+
+export const searchRecipes = (query) => async (dispatch, getState) => {
+  try {
+    const recipesRef = db.collection("recipes");
+
+    const teste = await recipesRef
+      .where("title", ">=", query)
+      .where("title", "<=", query + "\uf8ff")
+      .get();
+    console.log("query", query);
+    console.log(teste);
+  } catch (error) {
+    console.log(error);
+  }
 };
