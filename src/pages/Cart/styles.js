@@ -56,7 +56,7 @@ export const CartItem = styled.div`
       case RECIPES_TYPES.VEGETARIANO:
         return "1px solid var(--limeade);";
       default:
-        return "#fff";
+        return "1px solid#fff";
     }
   }};
 
@@ -69,7 +69,7 @@ export const CartItem = styled.div`
       case RECIPES_TYPES.VEGETARIANO:
         return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
       default:
-        return "#fff";
+        return "0px 0px 15px 0px rgba(255, 255, 255, 0.65)";
     }
   }};
 `;

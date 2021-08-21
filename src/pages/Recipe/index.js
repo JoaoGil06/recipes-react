@@ -53,7 +53,7 @@ const Recipe = () => {
       </Header>
       <RecipeMainContent>
         <div className="recipe__image">
-          <img src={`../${recipe.image}`} alt={recipe.title} />
+          <img src={`${recipe.image}`} alt={recipe.title} />
         </div>
         <RecipePreparation>
           <Ingredients>

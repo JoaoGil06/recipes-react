@@ -9,4 +9,8 @@ export const HomeContainer = styled.div`
   column-gap: 1rem;
   row-gap: 2.5rem;
   justify-items: center;
+
+  & > a {
+    height: 20rem;
+  }
 `;
