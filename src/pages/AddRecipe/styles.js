@@ -5,6 +5,26 @@ export const AddRecipeContainer = styled.main`
   min-height: calc(100vh - 30rem);
 `;
 
+export const Title = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 5rem;
+
+  a {
+    text-decoration: none;
+    color: #fff;
+  }
+
+  .underline {
+    height: 0.2rem;
+    width: 25%;
+    background: #fff;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+`;
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -167,7 +187,38 @@ export const InputSelect = styled.select`
   transition: all 0.5s;
 `;
 
+export const InputFile = styled.input``;
+
 export const HR = styled.hr`
   width: 100%;
   margin-top: 2.5rem;
+`;
+
+export const ButtonContainer = styled.div``;
+
+export const Button = styled.button`
+  width: 15rem;
+  margin-top: 5rem;
+  margin-bottom: 5rem;
+  align-self: center;
+  background: transparent;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-family: "Open Sans";
+  font-size: 1.1rem;
+  transition: 0.5s;
+  border: 1px solid #fff;
+  border-radius: 5px;
+
+  &:hover {
+    cursor: pointer;
+    background: #fff;
+
+    color: #222;
+  }
+
+  &:focus {
+    outline: none !important;
+  }
 `;

@@ -5,14 +5,17 @@ import * as recipesActions from "../../store/recipes/recipesActions";
 
 import {
   AddRecipeContainer,
+  Title,
   Form,
+  FormGrid,
   FormControl,
   InputLabel,
   InputText,
   InputSelect,
-  FormGrid,
+  InputFile,
   InputTextArea,
   HR,
+  Button,
 } from "./styles";
 
 const AddRecipe = () => {
@@ -52,6 +55,8 @@ const AddRecipe = () => {
   const handleOnChange = (e) => {
     const { name, value, files } = e.target;
 
+    console.log(files);
+
     if (name.includes("ingredient")) {
       setRecipeData({
         ...recipeData,
@@ -62,7 +67,7 @@ const AddRecipe = () => {
         ...recipeData,
         preparationSteps: { ...recipeData.preparationSteps, [name]: value },
       });
-    } else if (files !== null) {
+    } else if (files !== null && !!files) {
       setRecipeData({
         ...recipeData,
         image: files["0"],
@@ -87,120 +92,139 @@ const AddRecipe = () => {
     dispatch(recipesActions.addRecipe(params));
   };
 
+  const renderTitle = () => (
+    <Title>
+      <h1>Adicionar nova receita</h1>
+      <span className="underline"></span>
+    </Title>
+  );
+
+  const renderForm = () => (
+    <Form onSubmit={handleAddRecipe}>
+      <FormControl>
+        <InputLabel htmlFor="title">
+          <h3>Titulo</h3>
+        </InputLabel>
+        <InputText
+          type="text"
+          placeholder="Insere um titulo para a receita"
+          name="title"
+          onChange={handleOnChange}
+          category={recipeData.category}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel htmlFor="category">
+          <h3>Categoria</h3>
+        </InputLabel>
+        <InputSelect
+          id="category"
+          type="text"
+          placeholder="Categoria"
+          name="category"
+          onChange={handleOnChange}
+          category={recipeData.category}
+          defaultValue={recipeData.category}
+        >
+          <option value="carne">Carne</option>
+          <option value="peixe">Peixe</option>
+          <option value="vegetariano">Vegetariano</option>
+        </InputSelect>
+      </FormControl>
+      <FormControl>
+        <InputLabel htmlFor="description">
+          <h3>Descrição</h3>
+        </InputLabel>
+        <InputText
+          type="text"
+          placeholder="Insere uma descrição para a receita"
+          name="description"
+          onChange={handleOnChange}
+          category={recipeData.category}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel>
+          <h3>Imagem</h3>
+        </InputLabel>
+        <InputFile type="file" onChange={handleOnChange} />
+      </FormControl>
+      <HR />
+      <FormControl type="number">
+        <InputLabel htmlFor="numOfIngredients" type="number">
+          <h3>Nº de Ingredientes</h3>
+        </InputLabel>
+        <InputText
+          type="number"
+          onChange={handleChangeNumberOfIngredients}
+          max={15}
+          min={0}
+          placeholder="Nº de Ingredientes"
+          name="numOfIngredients"
+          category={recipeData.category}
+        />
+      </FormControl>
+      <FormGrid type="ingredients">
+        {numOfIngredients.map((value, index) => (
+          <FormControl>
+            <InputLabel htmlFor={`ingredient-${index + 1}`}>
+              <h3>Ingrediente nº 0{index + 1}</h3>
+            </InputLabel>
+            <InputText
+              key={index}
+              type="text"
+              placeholder={`Ingrediente 0${index + 1}`}
+              name={`ingredient-${index + 1}`}
+              onChange={handleOnChange}
+              category={recipeData.category}
+            />
+          </FormControl>
+        ))}
+      </FormGrid>
+      <HR />
+      <FormControl type="number">
+        <InputLabel htmlFor="numOfSteps" type="number">
+          <h3>Nº de Passos</h3>
+        </InputLabel>
+        <InputText
+          type="number"
+          onChange={handleChangeNumberOfSteps}
+          max={15}
+          min={0}
+          placeholder="Nº de Passos"
+          name="numOfSteps"
+          category={recipeData.category}
+        />
+      </FormControl>
+      <FormGrid type="steps">
+        {numOfSteps.map((value, index) => (
+          <FormControl>
+            <InputLabel htmlFor={`preparationStep-${index + 1}`}>
+              <h3>Passo nº 0{index + 1}</h3>
+            </InputLabel>
+            <InputTextArea
+              key={index}
+              type="text"
+              placeholder={`Passo 0${index + 1}`}
+              name={`preparationStep-${index + 1}`}
+              onChange={handleOnChange}
+              rows="4"
+              category={recipeData.category}
+            ></InputTextArea>
+          </FormControl>
+        ))}
+      </FormGrid>
+
+      <Button onClick={handleAddRecipe} category={recipeData.category}>
+        Adicionar receita
+      </Button>
+    </Form>
+  );
+
   return (
     <AddRecipeContainer>
-      <Form onSubmit={handleAddRecipe}>
-        <FormControl>
-          <InputLabel htmlFor="title">
-            <h3>Titulo</h3>
-          </InputLabel>
-          <InputText
-            type="text"
-            placeholder="Insere um titulo para a receita"
-            name="title"
-            onChange={handleOnChange}
-            category={recipeData.category}
-          />
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="category">
-            <h3>Categoria</h3>
-          </InputLabel>
-          <InputSelect
-            id="category"
-            type="text"
-            placeholder="Categoria"
-            name="category"
-            onChange={handleOnChange}
-            category={recipeData.category}
-            defaultValue={recipeData.category}
-          >
-            <option value="carne">Carne</option>
-            <option value="peixe">Peixe</option>
-            <option value="vegetariano">Vegetariano</option>
-          </InputSelect>
-        </FormControl>
-        <FormControl>
-          <InputLabel htmlFor="description">
-            <h3>Descrição</h3>
-          </InputLabel>
-          <InputText
-            type="text"
-            placeholder="Insere uma descrição para a receita"
-            name="description"
-            onChange={handleOnChange}
-            category={recipeData.category}
-          />
-        </FormControl>
-        <input type="file" onChange={handleOnChange} />
-        <HR />
-        <FormControl type="number">
-          <InputLabel htmlFor="numOfIngredients" type="number">
-            <h3>Nº de Ingredientes</h3>
-          </InputLabel>
-          <InputText
-            type="number"
-            onChange={handleChangeNumberOfIngredients}
-            max={15}
-            min={0}
-            placeholder="Nº de Ingredientes"
-            name="numOfIngredients"
-            category={recipeData.category}
-          />
-        </FormControl>
-        <FormGrid type="ingredients">
-          {numOfIngredients.map((value, index) => (
-            <FormControl>
-              <InputLabel htmlFor={`ingredient-${index + 1}`}>
-                <h3>Ingrediente nº 0{index + 1}</h3>
-              </InputLabel>
-              <InputText
-                key={index}
-                type="text"
-                placeholder={`Ingrediente 0${index + 1}`}
-                name={`ingredient-${index + 1}`}
-                onChange={handleOnChange}
-                category={recipeData.category}
-              />
-            </FormControl>
-          ))}
-        </FormGrid>
-        <HR />
-        <FormControl type="number">
-          <InputLabel htmlFor="numOfSteps" type="number">
-            <h3>Nº de Passos</h3>
-          </InputLabel>
-          <InputText
-            type="number"
-            onChange={handleChangeNumberOfSteps}
-            max={15}
-            min={0}
-            placeholder="Nº de Passos"
-            name="numOfSteps"
-            category={recipeData.category}
-          />
-        </FormControl>
-        <FormGrid type="steps">
-          {numOfSteps.map((value, index) => (
-            <FormControl>
-              <InputLabel htmlFor={`preparationStep-${index + 1}`}>
-                <h3>Passo nº 0{index + 1}</h3>
-              </InputLabel>
-              <InputTextArea
-                key={index}
-                type="text"
-                placeholder={`Passo 0${index + 1}`}
-                name={`preparationStep-${index + 1}`}
-                onChange={handleOnChange}
-                rows="4"
-                category={recipeData.category}
-              ></InputTextArea>
-            </FormControl>
-          ))}
-        </FormGrid>
-
-        <button>Enviar</button>
-      </Form>
+      {renderTitle()}
+      {renderForm()}
     </AddRecipeContainer>
   );
 };
