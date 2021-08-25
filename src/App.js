@@ -7,8 +7,8 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Recipe from "./pages/Recipe";
+import AddRecipe from "./pages/AddRecipe";
 import Cart from "./pages/Cart";
-import Footer from "./components/Footer";
 
 import { GlobalStyle } from "./styles/GlobalStyle";
 
@@ -24,7 +24,10 @@ function App() {
         <Route path="/recipes" exact>
           <Recipes />
         </Route>
-        <Route path="/recipes/:id">
+        <Route path="/recipes/add" exact>
+          <AddRecipe />
+        </Route>
+        <Route path="/recipes/:id" exact>
           <Recipe />
         </Route>
         <Route exact path="/cart">

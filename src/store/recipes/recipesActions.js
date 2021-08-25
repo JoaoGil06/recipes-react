@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as actionTypes from "./recipesActionTypes";
+import { storage } from "../../firebase";
 
 import { db } from "../../firebase";
 import { RECIPES_TYPES } from "../../constants/globalConstansts";
@@ -186,3 +187,45 @@ export const searchRecipes = (query) => async (dispatch, getState) => {
     console.log(error);
   }
 };
+const uploadImage = (image) => {
+  let progress = 0;
+
+  const uploadTask = storage.ref(`images/${image.name}`).put(image);
+  uploadTask.on(
+    "state_changed",
+    (snapshot) => {
+      progress = Math.round(
+        (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+      );
+    },
+    (error) => {
+      console.log(error);
+    }
+  );
+
+  return uploadTask;
+};
+
+export const addRecipe =
+  ({ title, category, description, image, ingredients, preparationSteps }) =>
+  async (dispatch, getState) => {
+    try {
+      const responseImage = await uploadImage(image);
+      const url = await responseImage.ref
+        .getDownloadURL()
+        .then((response) => response);
+
+      await db
+        .collection("recipes")
+        .add({
+          title,
+          category,
+          description,
+          image: url,
+          ingredients,
+          preparationSteps,
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
