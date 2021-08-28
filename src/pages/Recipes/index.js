@@ -20,7 +20,7 @@ const styleCardsObj = {
 };
 
 const Recipes = () => {
-  const [limit, setLimit] = useState(6);
+  const [limit, setLimit] = useState(9);
   const { categories, recipes, recipeFilter } = useSelector(
     (state) => state.recipes
   );
