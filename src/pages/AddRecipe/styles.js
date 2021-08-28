@@ -48,6 +48,10 @@ export const FormControl = styled.div`
 
   display: ${(props) => props.type === "number" && "flex"};
   align-items: ${(props) => props.type === "number" && "center"};
+
+  input[type="file"] {
+    display: none;
+  }
 `;
 
 export const InputLabel = styled.label`
@@ -185,6 +189,49 @@ export const InputSelect = styled.select`
   }
 
   transition: all 0.5s;
+`;
+
+export const InputLabelFile = styled.label`
+  max-width: 30rem;
+  background: transparent;
+  box-shadow: ${(props) => {
+    switch (props.category) {
+      case RECIPES_TYPES.CARNE:
+        return "0px 0px 15px 0px rgba(238, 96, 156, 0.65)";
+      case RECIPES_TYPES.PEIXE:
+        return "0px 0px 15px 0px rgba(80, 167, 194, 0.65) ;";
+      case RECIPES_TYPES.VEGETARIANO:
+        return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
+      default:
+        return "0px 0px 15px 0px rgba(255, 255, 255, 0.65)";
+    }
+  }};
+  border: ${(props) => {
+    switch (props.category) {
+      case RECIPES_TYPES.CARNE:
+        return "1px solid var(--brilliantRose)";
+      case RECIPES_TYPES.PEIXE:
+        return "1px solid var(--fountainBlue);";
+      case RECIPES_TYPES.VEGETARIANO:
+        return "1px solid var(--limeade);";
+      default:
+        return "1px solid #fff";
+    }
+  }};
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  &:not(.chosen):hover {
+  }
+
+  img {
+    width: 5rem;
+    margin-right: 1.5rem;
+  }
 `;
 
 export const InputFile = styled.input``;

@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import * as recipesActions from "../../store/recipes/recipesActions";
 
+import CloudUpload from "../../assets/icons/cloudupload.svg";
+
 import {
   AddRecipeContainer,
   Title,
@@ -13,6 +15,7 @@ import {
   InputText,
   InputSelect,
   InputFile,
+  InputLabelFile,
   InputTextArea,
   HR,
   Button,
@@ -29,6 +32,8 @@ const AddRecipe = () => {
     ingredients: {},
     preparationSteps: {},
   });
+
+  console.log("recipeData");
 
   const dispatch = useDispatch();
 
@@ -54,8 +59,6 @@ const AddRecipe = () => {
 
   const handleOnChange = (e) => {
     const { name, value, files } = e.target;
-
-    console.log(files);
 
     if (name.includes("ingredient")) {
       setRecipeData({
@@ -147,7 +150,15 @@ const AddRecipe = () => {
         <InputLabel>
           <h3>Imagem</h3>
         </InputLabel>
-        <InputFile type="file" onChange={handleOnChange} />
+        <InputLabelFile htmlFor="file" category={recipeData.category}>
+          <img src={CloudUpload} alt="Upload recipe" />
+          <span>
+            {!!recipeData["image"]?.name
+              ? recipeData["image"].name
+              : "Seleciona uma imagem"}
+          </span>
+        </InputLabelFile>
+        <InputFile id="file" type="file" onChange={handleOnChange} />
       </FormControl>
       <HR />
       <FormControl type="number">
