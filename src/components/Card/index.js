@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import CutleryIcon from "../../assets/icons/cutlery.svg";
 
@@ -8,8 +8,6 @@ import {
   CardInfo,
   CardInfoHeader,
   CardInfoContent,
-  CardButton,
-  CardButtons,
 } from "./styles";
 
 const Card = ({
@@ -24,53 +22,35 @@ const Card = ({
 }) => {
   const [isCardHover, setIsCardHover] = useState(false);
 
-  return (
-    <CardContainer
-      onMouseEnter={() => setIsCardHover(true)}
-      onMouseLeave={() => setIsCardHover(false)}
-    >
-      <CardImage className="front">
-        <img src={image} alt={title} />
-      </CardImage>
-      <CardInfo isCardHover={isCardHover} category={category} className="back">
-        <CardInfoHeader>
-          <h1>{category}</h1>
-          <img src={CutleryIcon} alt="recipes" />
-        </CardInfoHeader>
-        <CardInfoContent>
-          <h1>{title}</h1>
-          <p>{description}</p>
-          <CardButtons>
-            <CardButton category={category}>
-              <Link to={`/recipes/${id}`}>Abrir Receita</Link>
-            </CardButton>
+  useEffect(() => {
+    console.log("isCardHover", isCardHover);
+  }, [isCardHover]);
 
-            <CardButton category={category}>
-              <Link
-                to={`/cart`}
-                onClick={() =>
-                  handleClickAddOrRemoveRecipeToCart(
-                    {
-                      id,
-                      title,
-                      category,
-                      ingredients,
-                      description,
-                      image,
-                    },
-                    isRecipeInCart
-                  )
-                }
-              >
-                {!isRecipeInCart
-                  ? "Adicionar ao carrinho"
-                  : "Remover do carrinho"}
-              </Link>
-            </CardButton>
-          </CardButtons>
-        </CardInfoContent>
-      </CardInfo>
-    </CardContainer>
+  return (
+    <Link to={`/recipes/${id}`}>
+      <CardContainer
+        onMouseEnter={() => setIsCardHover(true)}
+        onMouseLeave={() => setIsCardHover(false)}
+      >
+        <CardImage className="front" isCardHover={isCardHover}>
+          <img src={image} alt={title} />
+        </CardImage>
+        <CardInfo
+          category={category}
+          className="back"
+          isCardHover={isCardHover}
+        >
+          <CardInfoHeader>
+            <h1>{category}</h1>
+            <img src={CutleryIcon} alt="recipes" />
+          </CardInfoHeader>
+          <CardInfoContent isCardHover={isCardHover}>
+            <h1>{title}</h1>
+            <p>{description}</p>
+          </CardInfoContent>
+        </CardInfo>
+      </CardContainer>
+    </Link>
   );
 };
 

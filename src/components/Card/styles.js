@@ -14,19 +14,22 @@ export const CardContainer = styled.div`
 
   position: relative;
   transition: all 0.8s;
-
-  &:hover {
-    transform: rotateY(180deg);
-  }
 `;
 export const CardImage = styled.div`
   height: 100%;
+  z-index: 3;
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 10px;
   }
+
+  ${({ isCardHover }) =>
+    isCardHover &&
+    ` 
+        opacity: 0.2;
+    `}
 `;
 export const CardInfo = styled.div`
   color: #fff;
@@ -36,16 +39,16 @@ export const CardInfo = styled.div`
   display: flex;
   flex-direction: column;
 
-  display: none;
   transition: 1s;
   height: 100%;
   width: 100%;
+  z-index: 4;
+  opacity: 0;
 
   ${({ isCardHover }) =>
     isCardHover &&
-    `
-    display: flex;
-    transform: rotateY(180deg);
+    ` 
+        opacity: 1;
     `}
 
   background: ${(props) => {
@@ -71,10 +74,12 @@ export const CardInfoHeader = styled.div`
   h1 {
     color: #fff;
     text-transform: capitalize;
+    z-index: 4;
   }
 
   img {
     width: 3.5rem;
+    z-index: 4;
   }
 `;
 
@@ -85,6 +90,8 @@ export const CardInfoContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  z-index: 4;
+  opacity: 0;
 
   h1 {
     color: #fff;
@@ -99,54 +106,12 @@ export const CardInfoContent = styled.div`
     margin-bottom: 2rem;
     font-size: 1.1rem;
   }
-`;
 
-export const CardButtons = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-`;
+  ${({ isCardHover }) =>
+    isCardHover &&
+    `
+      opacity: 1;
+    `}
 
-export const CardButton = styled.button`
-  background: transparent;
-
-  padding: 0.5rem 1rem;
-  font-weight: 600;
-  font-family: "Open Sans";
-  font-size: 1.1rem;
-  transition: 0.5s;
-  border: 1px solid #fff;
-  border-radius: 5px;
-
-  a {
-    text-decoration: none;
-    color: #fff;
-
-    img {
-      width: 2rem;
-    }
-  }
-
-  &:hover {
-    cursor: pointer;
-    background: #fff;
-    a {
-      color: ${(props) => {
-        switch (props.category) {
-          case RECIPES_TYPES.CARNE:
-            return "var(--brilliantRose)";
-          case RECIPES_TYPES.PEIXE:
-            return "var(--fountainBlue)";
-          case RECIPES_TYPES.VEGETARIANO:
-            return "var(--limeade)";
-          default:
-            return "var(--brilliantRose)";
-        }
-      }};
-    }
-  }
-
-  &:focus {
-    outline: none !important;
-  }
+  transition: 1s;
 `;
