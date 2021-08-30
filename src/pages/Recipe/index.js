@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import recipesData from "../../data";
 
 import { useSelector, useDispatch } from "react-redux";
 
@@ -14,6 +13,7 @@ import {
   RecipePreparation,
   Ingredients,
   Steps,
+  ButtonsContainer,
   Button,
 } from "./styles";
 
@@ -33,6 +33,11 @@ const Recipe = () => {
       : dispatch(cartActions.addRecipeToCart({ ...recipe, id: id }));
 
     history.push("/cart");
+  };
+
+  const handleDeleteRecipe = () => {
+    dispatch(recipesActions.deleteRecipe(id));
+    history.push("/recipes");
   };
 
   if (Object.keys(recipe).length === 0) {
@@ -74,11 +79,14 @@ const Recipe = () => {
           </Steps>
         </RecipePreparation>
       </RecipeMainContent>
-      <Button onClick={handleClickAddOrRemoveRecipeToCart}>
-        {recipe.isRecipeInCart
-          ? "Remover do carrinho"
-          : "Adicionar ao carrinho"}
-      </Button>
+      <ButtonsContainer>
+        <Button onClick={handleClickAddOrRemoveRecipeToCart}>
+          {recipe.isRecipeInCart
+            ? "Remover do carrinho"
+            : "Adicionar ao carrinho"}
+        </Button>
+        <Button onClick={handleDeleteRecipe}>Apagar receita</Button>
+      </ButtonsContainer>
     </RecipeContainer>
   );
 };
