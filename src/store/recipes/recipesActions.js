@@ -59,6 +59,21 @@ export const updateFilter = (filterType) => {
   return { type: actionTypes.UPDATE_FILTER, payload: filterType };
 };
 
+export const deleteRecipeStart = () => {
+  return { type: actionTypes.DELETE_RECIPE_START };
+};
+
+export const deleteRecipeSuccess = (id, recipes) => {
+  return {
+    type: actionTypes.DELETE_RECIPE_SUCCESS,
+    payload: { id, recipes },
+  };
+};
+
+export const deleteRecipeFail = (error) => {
+  return { type: actionTypes.DELETE_RECIPE_FAIL, payload: error };
+};
+
 export const getCategories = () => async (dispatch) => {
   try {
     dispatch(getCategoriesStart());
@@ -215,17 +230,35 @@ export const addRecipe =
         .getDownloadURL()
         .then((response) => response);
 
-      await db
-        .collection("recipes")
-        .add({
-          title,
-          category,
-          description,
-          image: url,
-          ingredients,
-          preparationSteps,
-        });
+      await db.collection("recipes").add({
+        title,
+        category,
+        description,
+        image: url,
+        ingredients,
+        preparationSteps,
+      });
     } catch (error) {
       console.log(error);
     }
   };
+
+export const deleteRecipe = (id) => async (dispatch, getState) => {
+  try {
+    dispatch(deleteRecipeStart());
+
+    await db
+      .collection("recipes")
+      .doc(id)
+      .delete()
+      .then(() => {
+        console.log("Receita apagada");
+      });
+
+    const { recipes } = getState();
+
+    dispatch(deleteRecipeSuccess(id, recipes.recipes));
+  } catch (error) {
+    dispatch(deleteRecipeFail(error));
+  }
+};

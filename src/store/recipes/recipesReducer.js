@@ -28,6 +28,14 @@ export const recipes = (state = initialState.recipes, action = {}) => {
         values: action.payload.recipes,
         total: action.payload.totalRecipes,
       };
+    case actionTypes.DELETE_RECIPE_SUCCESS:
+      const { id, recipes } = action.payload;
+      const newRecipes = recipes["values"].filter((recipe) => recipe.id !== id);
+
+      return {
+        values: newRecipes,
+        total: recipes.total - 1,
+      };
     default:
       return state;
   }
@@ -86,6 +94,7 @@ export const recipe = (state = initialState.recipe, action = {}) => {
   switch (action.type) {
     case actionTypes.GET_RECIPE_SUCCESS:
       return action.payload;
+
     default:
       return state;
   }

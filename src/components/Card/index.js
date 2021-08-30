@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import CutleryIcon from "../../assets/icons/cutlery.svg";
 
@@ -10,21 +10,8 @@ import {
   CardInfoContent,
 } from "./styles";
 
-const Card = ({
-  id,
-  image,
-  title,
-  category,
-  description,
-  ingredients,
-  handleClickAddOrRemoveRecipeToCart,
-  isRecipeInCart,
-}) => {
+const Card = ({ id, image, title, category, description }) => {
   const [isCardHover, setIsCardHover] = useState(false);
-
-  useEffect(() => {
-    console.log("isCardHover", isCardHover);
-  }, [isCardHover]);
 
   return (
     <Link to={`/recipes/${id}`}>

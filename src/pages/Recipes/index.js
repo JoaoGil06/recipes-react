@@ -24,7 +24,6 @@ const Recipes = () => {
   const { categories, recipes, recipeFilter } = useSelector(
     (state) => state.recipes
   );
-  const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,11 +62,6 @@ const Recipes = () => {
               title={recipe.title}
               description={recipe.description}
               category={recipe.category}
-              ingredients={recipe.ingredients}
-              handleClickAddOrRemoveRecipeToCart={
-                handleClickAddOrRemoveRecipeToCart
-              }
-              isRecipeInCart={recipe.isRecipeInCart}
             />
           );
         })}

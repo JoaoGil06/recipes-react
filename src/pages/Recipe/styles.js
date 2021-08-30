@@ -64,6 +64,15 @@ export const Steps = styled.div`
   }
 `;
 
+export const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+`;
+
 export const Button = styled.button`
   background: transparent;
   color: #fff;
