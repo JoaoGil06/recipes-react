@@ -26,11 +26,6 @@ const Navbar = () => {
               Carrinho
             </NavLink>
           </li>
-          <li>
-            <NavLink to="/recipes/add" activeClassName="active">
-              Adicionar Receita
-            </NavLink>
-          </li>
         </ul>
       </NavbarNav>
     </NavbarContainer>
