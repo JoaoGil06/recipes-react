@@ -7,6 +7,7 @@ import * as recipesActions from "../../store/recipes/recipesActions";
 
 import CutleryIcon from "../../assets/icons/cutlery.svg";
 import ShoppingCart from "../../assets/icons/shoppingcart.svg";
+import RecipeBook from "../../assets/icons/recipebook.svg";
 import HorizontalCard from "../../components/HorizontalCard";
 
 import { HomeContainer } from "./styles";
@@ -46,6 +47,18 @@ const Home = () => {
           icon={ShoppingCart}
           quantity={cart.length}
           description="adicionadas"
+        />
+      </Link>
+
+      <Link to="/recipes/add">
+        <HorizontalCard
+          gradient={{
+            backgroundImage: "linear-gradient(to right, #ff4e50, #f9d423)",
+          }}
+          title="Adicionar Receita"
+          icon={RecipeBook}
+          quantity={cart.length}
+          description="disponíveis"
         />
       </Link>
     </HomeContainer>
