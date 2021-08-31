@@ -52,13 +52,26 @@ export const FormControl = styled.div`
   input[type="file"] {
     display: none;
   }
+
+  p {
+    margin-left: 0.6rem;
+    color: red;
+  }
 `;
 
 export const InputLabel = styled.label`
   max-width: ${(props) => props.type === "number" && "9rem"};
+  display: flex;
+  align-items: center;
   h3 {
     margin-bottom: 0.6rem;
     font-size: 1.4rem;
+  }
+
+  span {
+    margin-left: 0.6rem;
+    margin-bottom: 0.6rem;
+    color: red;
   }
 `;
 

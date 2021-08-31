@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import * as recipesActions from "../../store/recipes/recipesActions";
-
+import * as Yup from "yup";
 import CloudUpload from "../../assets/icons/cloudupload.svg";
 
 import {
@@ -20,10 +20,11 @@ import {
   HR,
   Button,
 } from "./styles";
+import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 const AddRecipe = () => {
   const [numOfIngredients, setNumOfIngredients] = useState([]);
-  const [numOfSteps, setNumOfSteps] = useState([]);
+  const [preparationSteps, setPreparationSteps] = useState([]);
   const [recipeData, setRecipeData] = useState({
     title: "",
     category: "carne",
@@ -32,8 +33,7 @@ const AddRecipe = () => {
     ingredients: {},
     preparationSteps: {},
   });
-
-  console.log("recipeData");
+  const [formErrors, setFormErrors] = useState({});
 
   const dispatch = useDispatch();
 
@@ -51,8 +51,8 @@ const AddRecipe = () => {
     const quantity = parseInt(e.target.value);
 
     quantity > 15
-      ? setNumOfSteps(Array.apply(null, Array(15)).map((val, idx) => idx))
-      : setNumOfSteps(
+      ? setPreparationSteps(Array.apply(null, Array(15)).map((val, idx) => idx))
+      : setPreparationSteps(
           Array.apply(null, Array(quantity)).map((val, idx) => idx)
         );
   };
@@ -83,7 +83,7 @@ const AddRecipe = () => {
     }
   };
 
-  const handleAddRecipe = (e) => {
+  const handleAddRecipe = async (e) => {
     e.preventDefault();
 
     const params = {
@@ -92,9 +92,49 @@ const AddRecipe = () => {
       preparationSteps: Object.values(recipeData.preparationSteps),
     };
 
-    dispatch(recipesActions.addRecipe(params));
+    try {
+      const schema = Yup.object().shape({
+        title: Yup.string().required({
+          field: "title",
+          errorMessage: "Titulo obrigatório",
+        }),
+        category: Yup.mixed().oneOf(
+          [RECIPES_TYPES.CARNE, RECIPES_TYPES.PEIXE, RECIPES_TYPES.VEGETARIANO],
+          {
+            field: "category",
+            errorMessage: "Categoria obrigatória",
+          }
+        ),
+        description: Yup.string().required({
+          field: "description",
+          errorMessage: "Descrição obrigatória",
+        }),
+        ingredients: Yup.array().length(1, {
+          field: "ingredients",
+          errorMessage: "A receita deve ter pelo menos 1 ingrediente",
+        }),
+        preparationSteps: Yup.array().length(1, {
+          field: "preparationSteps",
+          errorMessage: "A receita deve ter pelo menos 1 passo",
+        }),
+      });
+
+      await schema.validate(params, {
+        abortEarly: false,
+      });
+
+      dispatch(recipesActions.addRecipe(params));
+    } catch (err) {
+      let errors = {};
+      err.errors.map((error) => {
+        errors[error.field] = error.errorMessage;
+      });
+
+      setFormErrors(errors);
+    }
   };
 
+  console.log(formErrors);
   const renderTitle = () => (
     <Title>
       <h1>Adicionar nova receita</h1>
@@ -107,6 +147,7 @@ const AddRecipe = () => {
       <FormControl>
         <InputLabel htmlFor="title">
           <h3>Titulo</h3>
+          {!!formErrors.title && <span>{formErrors.title}</span>}
         </InputLabel>
         <InputText
           type="text"
@@ -119,6 +160,7 @@ const AddRecipe = () => {
       <FormControl>
         <InputLabel htmlFor="category">
           <h3>Categoria</h3>
+          {!!formErrors.category && <span>{formErrors.category}</span>}
         </InputLabel>
         <InputSelect
           id="category"
@@ -137,6 +179,7 @@ const AddRecipe = () => {
       <FormControl>
         <InputLabel htmlFor="description">
           <h3>Descrição</h3>
+          {!!formErrors.description && <span>{formErrors.description}</span>}
         </InputLabel>
         <InputText
           type="text"
@@ -174,6 +217,8 @@ const AddRecipe = () => {
           name="numOfIngredients"
           category={recipeData.category}
         />
+
+        {!!formErrors.ingredients && <p>{formErrors.ingredients}</p>}
       </FormControl>
       <FormGrid type="ingredients">
         {numOfIngredients.map((value, index) => (
@@ -203,12 +248,13 @@ const AddRecipe = () => {
           max={15}
           min={0}
           placeholder="Nº de Passos"
-          name="numOfSteps"
+          name="preparationSteps"
           category={recipeData.category}
         />
+        {!!formErrors.preparationSteps && <p>{formErrors.preparationSteps}</p>}
       </FormControl>
       <FormGrid type="steps">
-        {numOfSteps.map((value, index) => (
+        {preparationSteps.map((value, index) => (
           <FormControl>
             <InputLabel htmlFor={`preparationStep-${index + 1}`}>
               <h3>Passo nº 0{index + 1}</h3>
