@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 
+import { useHistory } from "react-router-dom";
+
 import * as cartActions from "../../store/cart/cartActions";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -26,6 +28,11 @@ const Cart = () => {
   const [ingredients, setIngredients] = useState([]);
   const { cart } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    !cart.length && history.push("/");
+  }, [cart, history]);
 
   const handleDeleteClick = (id) => {
     dispatch(cartActions.deleteCartRecipe(id));

@@ -1,5 +1,5 @@
-import * as actionTypes from "./recipesActionTypes";
-import initialState from "./recipesInitialState";
+import * as actionTypes from "./mainDishesActionTypes";
+import initialState from "./mainDishesInitialState";
 
 import { combineReducers } from "redux";
 

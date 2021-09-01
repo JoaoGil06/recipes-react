@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import * as recipesActions from "../../store/recipes/recipesActions";
+import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
 import * as cartActions from "../../store/cart/cartActions";
 
 import {
@@ -19,12 +19,12 @@ import {
 
 const Recipe = () => {
   const { id } = useParams();
-  const { recipe } = useSelector((state) => state.recipes);
+  const { recipe } = useSelector((state) => state.mainDishes);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(recipesActions.getRecipe(id));
+    dispatch(mainDishesActions.getRecipe(id));
   }, [id, dispatch]);
 
   const handleClickAddOrRemoveRecipeToCart = () => {
@@ -36,7 +36,7 @@ const Recipe = () => {
   };
 
   const handleDeleteRecipe = () => {
-    dispatch(recipesActions.deleteRecipe(id));
+    dispatch(mainDishesActions.deleteRecipe(id));
     history.push("/recipes");
   };
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { useDispatch } from "react-redux";
-import * as recipesActions from "../../store/recipes/recipesActions";
+import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
 import * as Yup from "yup";
 import CloudUpload from "../../assets/icons/cloudupload.svg";
 
@@ -123,7 +123,7 @@ const AddRecipe = () => {
         abortEarly: false,
       });
 
-      dispatch(recipesActions.addRecipe(params));
+      dispatch(mainDishesActions.addRecipe(params));
     } catch (err) {
       let errors = {};
       err.errors.map((error) => {
@@ -134,7 +134,6 @@ const AddRecipe = () => {
     }
   };
 
-  console.log(formErrors);
   const renderTitle = () => (
     <Title>
       <h1>Adicionar nova receita</h1>

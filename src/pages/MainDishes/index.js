@@ -3,10 +3,10 @@ import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header";
 import Card from "../../components/Card";
 
-import { RecipesContainer, EndLoaderMessage } from "./styles";
+import { MainDishesContainer, EndLoaderMessage } from "./styles";
 
 import { useSelector, useDispatch } from "react-redux";
-import * as recipesActions from "../../store/recipes/recipesActions";
+import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
 import * as cartActions from "../../store/cart/cartActions";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Search from "../../components/Search";
@@ -19,21 +19,21 @@ const styleCardsObj = {
   justifyItems: "center",
 };
 
-const Recipes = () => {
+const MainDishes = () => {
   const [limit, setLimit] = useState(9);
   const { categories, recipes, recipeFilter } = useSelector(
-    (state) => state.recipes
+    (state) => state.mainDishes
   );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(recipesActions.getCategories());
-    dispatch(recipesActions.getRecipes(recipeFilter, limit));
+    dispatch(mainDishesActions.getCategories());
+    dispatch(mainDishesActions.getRecipes(recipeFilter, limit));
   }, [dispatch, limit, recipeFilter]);
 
   const filterRecipes = useCallback(
     (category) => {
-      dispatch(recipesActions.getRecipes(category, limit));
+      dispatch(mainDishesActions.getRecipes(category, limit));
     },
     [dispatch, limit]
   );
@@ -80,10 +80,10 @@ const Recipes = () => {
   return (
     <>
       {renderHeader()}
-      <Search handleSearch={recipesActions.searchRecipes} />
-      <RecipesContainer>
+      <Search handleSearch={mainDishesActions.searchRecipes} />
+      <MainDishesContainer>
         {recipes.values && renderCards(recipes.values, recipes.total)}
-      </RecipesContainer>
+      </MainDishesContainer>
       {recipes.values?.length === recipes.total ? (
         <EndLoaderMessage>Não existem mais receitas</EndLoaderMessage>
       ) : (
@@ -93,4 +93,4 @@ const Recipes = () => {
   );
 };
 
-export default Recipes;
+export default MainDishes;
