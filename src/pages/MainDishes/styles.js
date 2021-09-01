@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const RecipesContainer = styled.main`
+export const MainDishesContainer = styled.main`
   min-height: calc(100vh - 30rem);
 `;
 

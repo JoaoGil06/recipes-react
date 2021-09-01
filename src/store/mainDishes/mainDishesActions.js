@@ -1,5 +1,5 @@
 import axios from "axios";
-import * as actionTypes from "./recipesActionTypes";
+import * as actionTypes from "./mainDishesActionTypes";
 import { storage } from "../../firebase";
 
 import { db } from "../../firebase";
@@ -80,7 +80,7 @@ export const getCategories = () => async (dispatch) => {
     const snapshot = await db.collection("categories").get();
     const categories = snapshot.docs
       .map((category) => category.data())
-      .map((category) => category.categories)
+      .map((category) => category.main_dishes)
       .flat();
 
     dispatch(getCategoriesSuccess(categories));
@@ -104,11 +104,11 @@ const getRecipesCount =
 
       if (filterType !== RECIPES_TYPES.TODOS) {
         snapshot = await db
-          .collection("recipes")
+          .collection("main_dishes")
           .where("category", "==", filterType)
           .get();
       } else {
-        snapshot = await db.collection("recipes").get();
+        snapshot = await db.collection("main_dishes").get();
       }
       const recipes = snapshot.docs.map((recipe) => {
         const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
@@ -136,12 +136,12 @@ export const getRecipes =
 
       if (filterType !== RECIPES_TYPES.TODOS) {
         snapshot = await db
-          .collection("recipes")
+          .collection("main_dishes")
           .where("category", "==", filterType)
           .limit(limit)
           .get();
       } else {
-        snapshot = await db.collection("recipes").limit(limit).get();
+        snapshot = await db.collection("main_dishes").limit(limit).get();
       }
       const recipes = snapshot.docs.map((recipe) => {
         const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
@@ -166,7 +166,7 @@ export const getRecipe = (id) => async (dispatch, getState) => {
     const { cart } = getState().cart;
     dispatch(getRecipeStart());
 
-    const snapshot = await db.collection("recipes").doc(id).get();
+    const snapshot = await db.collection("main_dishes").doc(id).get();
     const recipe = snapshot.data();
     const IS_RECIPE_IN_CART = isRecipeInCart(id, cart);
 
@@ -182,7 +182,7 @@ export const getTotalRecipesCount = () => async (dispatch) => {
   try {
     dispatch(getRecipesCountStart());
 
-    const snapshot = await db.collection("recipes").get();
+    const snapshot = await db.collection("main_dishes").get();
     const recipes = snapshot.docs;
     dispatch(getRecipesCountSuccess(recipes.length));
   } catch (error) {}
@@ -190,7 +190,7 @@ export const getTotalRecipesCount = () => async (dispatch) => {
 
 export const searchRecipes = (query) => async (dispatch, getState) => {
   try {
-    const recipesRef = db.collection("recipes");
+    const recipesRef = db.collection("main_dishes");
 
     const teste = await recipesRef
       .where("title", ">=", query)
@@ -230,7 +230,7 @@ export const addRecipe =
         .getDownloadURL()
         .then((response) => response);
 
-      await db.collection("recipes").add({
+      await db.collection("main_dishes").add({
         title,
         category,
         description,
@@ -248,7 +248,7 @@ export const deleteRecipe = (id) => async (dispatch, getState) => {
     dispatch(deleteRecipeStart());
 
     await db
-      .collection("recipes")
+      .collection("main_dishes")
       .doc(id)
       .delete()
       .then(() => {

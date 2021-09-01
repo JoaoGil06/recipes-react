@@ -9,11 +9,11 @@ import { reactReduxFirebase, getFirebase } from "react-redux-firebase";
 import firebase from "../firebase";
 
 /* Reducers */
-import recipesReducer from "./recipes/recipesReducer";
+import mainDishesReducer from "./mainDishes/mainDishesReducer";
 import cartReducer from "./cart/cartReducer";
 
 const rootReducer = combineReducers({
-  recipes: recipesReducer,
+  mainDishes: mainDishesReducer,
   cart: cartReducer,
 });
 

@@ -17,8 +17,8 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/recipes" activeClassName="active">
-              Receitas
+            <NavLink to="/mainDishes" activeClassName="active">
+              Pratos Principais
             </NavLink>
           </li>
           <li>
