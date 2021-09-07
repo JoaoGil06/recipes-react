@@ -2,7 +2,7 @@ import React from "react";
 
 import { HeaderContainer, Title, TabContainer, Tab, TabCircle } from "./styles";
 
-const Header = ({ categories, filterRecipes, selectedCategory }) => {
+const Header = ({ categories, onClick, selectedCategory }) => {
   return (
     <HeaderContainer>
       <Title>
@@ -13,7 +13,7 @@ const Header = ({ categories, filterRecipes, selectedCategory }) => {
         {categories.map((category, index) => (
           <Tab
             category={category}
-            onClick={() => filterRecipes(category)}
+            onClick={() => onClick(category)}
             key={index}
             isActive={category === selectedCategory}
             selectedCategory={selectedCategory}

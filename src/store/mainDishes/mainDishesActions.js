@@ -1,4 +1,3 @@
-import axios from "axios";
 import * as actionTypes from "./mainDishesActionTypes";
 import { storage } from "../../firebase";
 
@@ -55,8 +54,8 @@ export const getRecipesCountSuccess = (recipes) => {
   return { type: actionTypes.GET_RECIPES_COUNT_SUCCESS, payload: recipes };
 };
 
-export const updateFilter = (filterType) => {
-  return { type: actionTypes.UPDATE_FILTER, payload: filterType };
+export const updateFilter = (category, search) => {
+  return { type: actionTypes.UPDATE_FILTER, payload: { category, search } };
 };
 
 export const deleteRecipeStart = () => {
@@ -96,26 +95,27 @@ const isRecipeInCart = (recipeId, cart) => {
 };
 
 const getRecipesCount =
-  (filterType = RECIPES_TYPES.TODOS) =>
+  (filterType = RECIPES_TYPES.TODOS, searchValue) =>
   async (dispatch, getState) => {
     try {
-      const { cart } = getState().cart;
       let snapshot = [];
 
       if (filterType !== RECIPES_TYPES.TODOS) {
         snapshot = await db
           .collection("main_dishes")
           .where("category", "==", filterType)
+          .where("searchKeys", "array-contains", searchValue.toLowerCase())
           .get();
       } else {
-        snapshot = await db.collection("main_dishes").get();
+        snapshot = await db
+          .collection("main_dishes")
+          .where("searchKeys", "array-contains", searchValue.toLowerCase())
+          .get();
       }
       const recipes = snapshot.docs.map((recipe) => {
-        const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
         return {
           ...recipe.data(),
           id: recipe.id,
-          isRecipeInCart: IS_RECIPE_IN_CART,
         };
       });
 
@@ -126,33 +126,39 @@ const getRecipesCount =
   };
 
 export const getRecipes =
-  (filterType = RECIPES_TYPES.TODOS, limit) =>
+  (filterType = RECIPES_TYPES.TODOS, searchValue = "", limit) =>
   async (dispatch, getState) => {
     try {
-      const { cart } = getState().cart;
       dispatch(getRecipesStart());
       let snapshot = [];
-      const totalRecipes = await dispatch(getRecipesCount(filterType));
+      const totalRecipes = await dispatch(
+        getRecipesCount(filterType, searchValue)
+      );
 
       if (filterType !== RECIPES_TYPES.TODOS) {
         snapshot = await db
           .collection("main_dishes")
           .where("category", "==", filterType)
+          .where("searchKeys", "array-contains", searchValue.toLowerCase())
           .limit(limit)
           .get();
       } else {
-        snapshot = await db.collection("main_dishes").limit(limit).get();
+        snapshot = await db
+          .collection("main_dishes")
+          .where("searchKeys", "array-contains", searchValue.toLowerCase())
+          .limit(limit)
+          .get();
       }
+
       const recipes = snapshot.docs.map((recipe) => {
-        const IS_RECIPE_IN_CART = isRecipeInCart(recipe.id, cart);
         return {
           ...recipe.data(),
           id: recipe.id,
-          isRecipeInCart: IS_RECIPE_IN_CART,
         };
       });
+
       dispatch(getRecipesSuccess(recipes, totalRecipes));
-      dispatch(updateFilter(filterType));
+      dispatch(updateFilter(filterType, searchValue));
 
       return recipes;
     } catch (error) {
@@ -188,20 +194,6 @@ export const getTotalRecipesCount = () => async (dispatch) => {
   } catch (error) {}
 };
 
-export const searchRecipes = (query) => async (dispatch, getState) => {
-  try {
-    const recipesRef = db.collection("main_dishes");
-
-    const teste = await recipesRef
-      .where("title", ">=", query)
-      .where("title", "<=", query + "\uf8ff")
-      .get();
-    console.log("query", query);
-    console.log(teste);
-  } catch (error) {
-    console.log(error);
-  }
-};
 const uploadImage = (image) => {
   let progress = 0;
 
@@ -221,10 +213,25 @@ const uploadImage = (image) => {
   return uploadTask;
 };
 
+const convertTitleToSearchKeys = (title) => {
+  let searchKeys = [];
+
+  for (let i = 0; searchKeys.length <= title.length; i++) {
+    if (i === 0) {
+      searchKeys.push("", title[i]);
+    } else {
+      searchKeys.push(title.slice(0, i + 1));
+    }
+  }
+
+  return searchKeys;
+};
+
 export const addRecipe =
   ({ title, category, description, image, ingredients, preparationSteps }) =>
   async (dispatch, getState) => {
     try {
+      const searchKeys = convertTitleToSearchKeys(title.toLowerCase());
       const responseImage = await uploadImage(image);
       const url = await responseImage.ref
         .getDownloadURL()
@@ -237,6 +244,7 @@ export const addRecipe =
         image: url,
         ingredients,
         preparationSteps,
+        searchKeys,
       });
     } catch (error) {
       console.log(error);

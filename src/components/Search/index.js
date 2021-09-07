@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import { Form } from "./styles";
-
-import { useDispatch } from "react-redux";
+import { Form, Input } from "./styles";
 
 const Search = ({ handleSearch }) => {
   const [searchText, setSearchText] = useState("");
 
-  const dispatch = useDispatch();
-
   useEffect(() => {
-    dispatch(handleSearch(searchText));
-  }, [dispatch, searchText, handleSearch]);
+    handleSearch(searchText);
+  }, [searchText, handleSearch]);
 
   let time = null;
   const handleChangeSearchText = (e) => {
@@ -24,7 +20,11 @@ const Search = ({ handleSearch }) => {
 
   return (
     <Form onSubmit={(e) => e.preventDefault()}>
-      <input type="text" onChange={handleChangeSearchText} />
+      <Input
+        type="text"
+        onChange={handleChangeSearchText}
+        placeholder="Pesquisa por uma receita..."
+      />
     </Form>
   );
 };

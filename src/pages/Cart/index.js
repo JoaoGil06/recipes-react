@@ -49,7 +49,6 @@ const Cart = () => {
       ...new Set([].concat.apply([], allIngredients)),
     ];
     setIngredients(arrayOfIngredients);
-    console.log(arrayOfIngredients);
     setShowModal(!showModal);
   };
 

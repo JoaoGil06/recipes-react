@@ -78,13 +78,13 @@ export const categories = (state = initialState.categories, action = {}) => {
   }
 };
 
-export const recipeFilter = (
-  state = initialState.recipeFilter,
-  action = {}
-) => {
+export const filters = (state = initialState.filters, action = {}) => {
   switch (action.type) {
     case actionTypes.UPDATE_FILTER:
-      return action.payload;
+      return {
+        category: action.payload.category,
+        search: action.payload.search,
+      };
     default:
       return state;
   }
@@ -106,6 +106,6 @@ export default combineReducers({
   recipes,
   isLoadingCategories,
   categories,
-  recipeFilter,
+  filters,
   recipe,
 });
