@@ -7,9 +7,9 @@ import { MainDishesContainer, EndLoaderMessage } from "./styles";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
-import * as cartActions from "../../store/cart/cartActions";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Search from "../../components/Search";
+import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 const styleCardsObj = {
   display: "grid",
@@ -21,28 +21,23 @@ const styleCardsObj = {
 
 const MainDishes = () => {
   const [limit, setLimit] = useState(9);
-  const { categories, recipes, recipeFilter } = useSelector(
-    (state) => state.mainDishes
-  );
+  const [category, setCategory] = useState(RECIPES_TYPES.TODOS);
+  const [searchValue, setSearchValue] = useState("");
+  const { categories, recipes } = useSelector((state) => state.mainDishes);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(mainDishesActions.getCategories());
-    dispatch(mainDishesActions.getRecipes(recipeFilter, limit));
-  }, [dispatch, limit, recipeFilter]);
+    dispatch(mainDishesActions.getRecipes(category, searchValue, limit));
+  }, [dispatch, limit, category, searchValue]);
 
-  const filterRecipes = useCallback(
-    (category) => {
-      dispatch(mainDishesActions.getRecipes(category, limit));
-    },
-    [dispatch, limit]
-  );
+  const handleCategoryChange = useCallback((category) => {
+    setCategory(category);
+  }, []);
 
-  const handleClickAddOrRemoveRecipeToCart = (recipe, isRecipeInCart) => {
-    isRecipeInCart
-      ? dispatch(cartActions.deleteCartRecipe(recipe.id))
-      : dispatch(cartActions.addRecipeToCart(recipe));
-  };
+  const handleSearch = useCallback((searchValue) => {
+    setSearchValue(searchValue);
+  }, []);
 
   const renderCards = (recipes, totalRecipes) => {
     return (
@@ -72,15 +67,15 @@ const MainDishes = () => {
   const renderHeader = () => (
     <Header
       categories={categories}
-      filterRecipes={filterRecipes}
-      selectedCategory={recipeFilter}
+      onClick={handleCategoryChange}
+      selectedCategory={category}
     />
   );
 
   return (
     <>
       {renderHeader()}
-      <Search handleSearch={mainDishesActions.searchRecipes} />
+      <Search handleSearch={handleSearch} />
       <MainDishesContainer>
         {recipes.values && renderCards(recipes.values, recipes.total)}
       </MainDishesContainer>

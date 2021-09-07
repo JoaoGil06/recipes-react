@@ -3,7 +3,6 @@ import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const HeaderContainer = styled.header`
   padding: 2.5rem 0;
-  margin-bottom: 2.5rem;
 
   display: flex;
   flex-direction: column;

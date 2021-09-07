@@ -4,7 +4,10 @@ const initialState = {
   categories: [],
   isLoadingRecipes: false,
   isLoadingCategories: false,
-  recipeFilter: "todos",
+  filters: {
+    category: "todos",
+    search: "",
+  },
   recipe: {},
 };
 
