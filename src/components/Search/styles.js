@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const Form = styled.form`
   display: flex;

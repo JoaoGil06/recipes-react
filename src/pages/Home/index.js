@@ -4,22 +4,30 @@ import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
+import * as accompanimentsActions from "../../store/accompaniments/accompanimentsActions";
 
 import CutleryIcon from "../../assets/icons/cutlery.svg";
 import ShoppingCart from "../../assets/icons/shoppingcart.svg";
 import RecipeBook from "../../assets/icons/recipebook.svg";
+import Salad from "../../assets/icons/salad.svg";
 import HorizontalCard from "../../components/HorizontalCard";
 
 import { HomeContainer } from "./styles";
 
 const Home = () => {
-  const { totalRecipes } = useSelector((state) => state.mainDishes);
+  const { totalRecipes: mainDishesRecipes } = useSelector(
+    (state) => state.mainDishes
+  );
+  const { totalRecipes: accompanimentsRecipes } = useSelector(
+    (state) => state.accompaniments
+  );
   const { cart } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(mainDishesActions.getTotalRecipesCount());
+    dispatch(accompanimentsActions.getTotalRecipesCount());
   }, [dispatch]);
 
   return (
@@ -32,20 +40,20 @@ const Home = () => {
           }}
           title="Pratos Principais"
           icon={CutleryIcon}
-          quantity={totalRecipes}
+          quantity={mainDishesRecipes}
           description="disponíveis"
         />
       </Link>
-      <Link to="/cart">
+
+      <Link to="/accompaniments">
         <HorizontalCard
           gradient={{
-            backgroundImage:
-              "linear-gradient(to right, #473b7b 0%, #3584a7 48.53%, #30d2be 100%)",
+            backgroundImage: "linear-gradient(to right, #11998e, #38ef7d)",
           }}
-          title="Carrinho"
-          icon={ShoppingCart}
-          quantity={cart.length}
-          description="adicionadas"
+          title="Acompanhamentos"
+          icon={Salad}
+          quantity={accompanimentsRecipes}
+          description="disponíveis"
         />
       </Link>
 
@@ -58,6 +66,19 @@ const Home = () => {
           icon={RecipeBook}
           quantity={cart.length}
           description="disponíveis"
+        />
+      </Link>
+
+      <Link to="/cart">
+        <HorizontalCard
+          gradient={{
+            backgroundImage:
+              "linear-gradient(to right, #473b7b 0%, #3584a7 48.53%, #30d2be 100%)",
+          }}
+          title="Carrinho"
+          icon={ShoppingCart}
+          quantity={cart.length}
+          description="adicionadas"
         />
       </Link>
     </HomeContainer>

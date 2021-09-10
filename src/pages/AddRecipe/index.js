@@ -109,11 +109,11 @@ const AddRecipe = () => {
           field: "description",
           errorMessage: "Descrição obrigatória",
         }),
-        ingredients: Yup.array().length(1, {
+        ingredients: Yup.array().min(1, {
           field: "ingredients",
           errorMessage: "A receita deve ter pelo menos 1 ingrediente",
         }),
-        preparationSteps: Yup.array().length(1, {
+        preparationSteps: Yup.array().min(1, {
           field: "preparationSteps",
           errorMessage: "A receita deve ter pelo menos 1 passo",
         }),

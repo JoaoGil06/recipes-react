@@ -3,4 +3,7 @@ export const RECIPES_TYPES = {
   CARNE: "carne",
   PEIXE: "peixe",
   VEGETARIANO: "vegetariano",
+  SALADAS: "saladas",
+  MOLHOS: "molhos",
+  CONSERVAS: "conservas",
 };

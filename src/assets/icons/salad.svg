@@ -1,0 +1,10 @@
+<svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+	<title>salad-svg</title>
+	<defs>
+		<image  width="56" height="57" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA5CAMAAABUBBiJAAAAAXNSR0IB2cksfwAAASNQTFRFAAAA////////////////////////////////////////////////+/v7/////////////////////////////v7+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+iIiBAAAAGF0Uk5TAEDf4P/wII/PkNAbB0Cv1/e3eCpV/3+/XxA27e8wUIbTHEr7YDHz6Qloe5dCoALFzAxwTJlDxsCAVo7UHuPKBBbZsHR3afFvBs3eCA/hN1qHu06tLdhEpA5PM+WSRz8vnwtoVJ8AAALXSURBVHicvVZpe5QwEB5g2F1Qt1UruyhsraLVKh54gEet1mO976serf//VziThGsBF/jg+wGeJPNmjsxMApBC03UN+sBA1HsRTUSjF1EzjNzUkt2D4QgZbXYp2m2hQhtiwW4buxBzuzN9aLchZhhkPLQ6EXOFOKhZPqQdbiDazQqPjFdWEVePHjteR2z2cA1PqCW9jtnsIM86ulzlQGoTxMnULRFtq8Y/5sHJU0LA82GmtM/q7HanjpNtsY54egPOnBXy6ykRMajyZh5vnqbiufOImxfgopBeEckmUdEZyPlROt6S2XRJzF6GMCV6bpmXpUJq7JWrNLgG1/mHQ97XlDGJysRIhEmFUOAGz9yEW/y7DRpizB/+lZCIw9QKRGnlHbhL33uszBK7GzUaI/7mxPvbNPdg5+EjxG0mauzoAg3AJyEfdhELvj9mlU/gKeIzIhpcjj6poPjZ81zKpBW37MHzF0R8+er1Gw4vJnSYEbgjMcBRpiDGkFZMv2jG201ivoP3+AE004XYKJRFdm4JJYVVdsGFjyTxCT7jFgQJRS4AP6+nNId26QTtYv+IdN0FhyQ24MtXiNgmNseQpqIdpMERLmaW+lwZYwAqijX49h0GHHHabYbKRxGXiTNG4SJ6Q2dvIF2WWfLjJ/4CrkjfU6oUtHk6SkQSiARzMwkNfvPpk7+6OK/cRUoXP5WJKxH7n8CeKDrTBXbubzfExVbdBbL0eiBKz6gr/EJb6wK+PMPlYlWERNT6EEXfYVvH3Xjymg8Q56Ie20OVqIETUY8dFQKXpwOu156YXSuUdvuigNshb5ADE72D1kyzcMtyLzmQ7aeDoQxLMN02p7LwGqD88faouS01N1zsBJx5Q3J3SQZWePL+G+0vOdCkrvvM6MmIf6blrlqCWfsWITNVG2kixnWvOaX0H8VpNKhTCBqoRs27ZwF+aFZ8C/2lNMmNrFhpNmIrqmX9BWcuRG49B2oSAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<use id="Camada 2" href="#img1" x="4" y="3" />
+</svg>
