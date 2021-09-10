@@ -5,72 +5,72 @@ import { db } from "../../firebase";
 import { RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const getRecipesStart = () => {
-  return { type: actionTypes.GET_RECIPES_START };
+  return { type: actionTypes.GET_MD_RECIPES_START };
 };
 
 export const getRecipesSuccess = (recipes, totalRecipes) => {
   return {
-    type: actionTypes.GET_RECIPES_SUCCESS,
+    type: actionTypes.GET_MD_RECIPES_SUCCESS,
     payload: { recipes, totalRecipes },
   };
 };
 
 export const getRecipesFail = (error) => {
-  return { type: actionTypes.GET_RECIPES_FAIL, payload: error };
+  return { type: actionTypes.GET_MD_RECIPES_FAIL, payload: error };
 };
 
 export const getCategoriesStart = () => {
-  return { type: actionTypes.GET_CATEGORIES_START };
+  return { type: actionTypes.GET_MD_CATEGORIES_START };
 };
 
 export const getCategoriesSuccess = (recipes) => {
   return {
-    type: actionTypes.GET_CATEGORIES_SUCCESS,
+    type: actionTypes.GET_MD_CATEGORIES_SUCCESS,
     payload: recipes,
   };
 };
 
 export const getCategoriesFail = (error) => {
-  return { type: actionTypes.GET_CATEGORIES_FAIL, payload: error };
+  return { type: actionTypes.GET_MD_CATEGORIES_FAIL, payload: error };
 };
 
 export const getRecipeStart = () => {
-  return { type: actionTypes.GET_RECIPE_START };
+  return { type: actionTypes.GET_MD_RECIPE_START };
 };
 
 export const getRecipeSuccess = (recipe) => {
-  return { type: actionTypes.GET_RECIPE_SUCCESS, payload: recipe };
+  return { type: actionTypes.GET_MD_RECIPE_SUCCESS, payload: recipe };
 };
 
 export const getRecipeFail = (error) => {
-  return { type: actionTypes.GET_RECIPE_FAIL, payload: error };
+  return { type: actionTypes.GET_MD_RECIPE_FAIL, payload: error };
 };
 
 export const getRecipesCountStart = () => {
-  return { type: actionTypes.GET_RECIPES_COUNT_START };
+  return { type: actionTypes.GET_MD_RECIPES_COUNT_START };
 };
 
 export const getRecipesCountSuccess = (recipes) => {
-  return { type: actionTypes.GET_RECIPES_COUNT_SUCCESS, payload: recipes };
+  return { type: actionTypes.GET_MD_RECIPES_COUNT_SUCCESS, payload: recipes };
 };
 
 export const updateFilter = (category, search) => {
-  return { type: actionTypes.UPDATE_FILTER, payload: { category, search } };
+  return { type: actionTypes.UPDATE_MD_FILTER, payload: { category, search } };
 };
 
 export const deleteRecipeStart = () => {
-  return { type: actionTypes.DELETE_RECIPE_START };
+  return { type: actionTypes.DELETE_MD_RECIPE_START };
 };
 
 export const deleteRecipeSuccess = (id, recipes) => {
   return {
-    type: actionTypes.DELETE_RECIPE_SUCCESS,
+    type: actionTypes.DELETE_MD_RECIPE_SUCCESS,
     payload: { id, recipes },
   };
 };
 
 export const deleteRecipeFail = (error) => {
-  return { type: actionTypes.DELETE_RECIPE_FAIL, payload: error };
+  return { type: actionTypes.DELETE_MD_RECIPE_FAIL, payload: error };
 };
 
 export const getCategories = () => async (dispatch) => {

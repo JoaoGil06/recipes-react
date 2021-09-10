@@ -10,10 +10,12 @@ import firebase from "../firebase";
 
 /* Reducers */
 import mainDishesReducer from "./mainDishes/mainDishesReducer";
+import accompanimentsReducer from "./accompaniments/accompanimentsReducer";
 import cartReducer from "./cart/cartReducer";
 
 const rootReducer = combineReducers({
   mainDishes: mainDishesReducer,
+  accompaniments: accompanimentsReducer,
   cart: cartReducer,
 });
 

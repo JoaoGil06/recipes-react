@@ -6,17 +6,14 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import MainDishes from "./pages/MainDishes";
+import Accompaniments from "./pages/Accompaniments";
 import Recipe from "./pages/Recipe";
 import AddRecipe from "./pages/AddRecipe";
 import Cart from "./pages/Cart";
 
-import { useSelector } from "react-redux";
-
 import { GlobalStyle } from "./styles/GlobalStyle";
 
 function App() {
-  const { cart } = useSelector((state) => state.cart);
-
   return (
     <BrowserRouter>
       <Navbar />
@@ -34,13 +31,12 @@ function App() {
         <Route path="/recipes/:id" exact>
           <Recipe />
         </Route>
-        {!cart.length ? (
-          <Route exact path="/cart">
-            <Cart />
-          </Route>
-        ) : (
-          <Redirect to="/" />
-        )}
+        <Route exact path="/accompaniments">
+          <Accompaniments />
+        </Route>
+        <Route exact path="/cart">
+          <Cart />
+        </Route>
       </Switch>
       <GlobalStyle />
     </BrowserRouter>
