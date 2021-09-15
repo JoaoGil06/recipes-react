@@ -7,9 +7,13 @@ import { MainDishesContainer, EndLoaderMessage } from "./styles";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
+import * as categoriesActions from "../../store/categories/categoriesActions";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Search from "../../components/Search";
-import { RECIPES_TYPES } from "../../constants/globalConstansts";
+import {
+  GLOBAL_RECIPES_TYPES,
+  RECIPES_TYPES,
+} from "../../constants/globalConstansts";
 
 const styleCardsObj = {
   display: "grid",
@@ -27,7 +31,7 @@ const MainDishes = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(mainDishesActions.getCategories());
+    dispatch(categoriesActions.getCategories());
     dispatch(mainDishesActions.getRecipes(category, searchValue, limit));
   }, [dispatch, limit, category, searchValue]);
 
@@ -57,6 +61,7 @@ const MainDishes = () => {
               title={recipe.title}
               description={recipe.description}
               category={recipe.category}
+              recipeType={GLOBAL_RECIPES_TYPES.MAIN_DISHES}
             />
           );
         })}

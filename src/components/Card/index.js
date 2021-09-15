@@ -10,11 +10,11 @@ import {
   CardInfoContent,
 } from "./styles";
 
-const Card = ({ id, image, title, category, description }) => {
+const Card = ({ id, image, title, category, description, recipeType }) => {
   const [isCardHover, setIsCardHover] = useState(false);
 
   return (
-    <Link to={`/recipes/${id}`}>
+    <Link to={`/recipes/${recipeType}/${id}`}>
       <CardContainer
         onMouseEnter={() => setIsCardHover(true)}
         onMouseLeave={() => setIsCardHover(false)}

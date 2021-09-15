@@ -7,3 +7,8 @@ export const RECIPES_TYPES = {
   MOLHOS: "molhos",
   CONSERVAS: "conservas",
 };
+
+export const GLOBAL_RECIPES_TYPES = {
+  MAIN_DISHES: "main_dishes",
+  ACCOMPANIMENTS: "accompaniments",
+};

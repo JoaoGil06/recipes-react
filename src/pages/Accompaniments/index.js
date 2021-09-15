@@ -6,11 +6,14 @@ import Card from "../../components/Card";
 import { AccompanimentsContainer, EndLoaderMessage } from "./styles";
 
 import { useSelector, useDispatch } from "react-redux";
-import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
 import * as accompanimentsActions from "../../store/accompaniments/accompanimentsActions";
+import * as categoriesActions from "../../store/categories/categoriesActions";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Search from "../../components/Search";
-import { RECIPES_TYPES } from "../../constants/globalConstansts";
+import {
+  GLOBAL_RECIPES_TYPES,
+  RECIPES_TYPES,
+} from "../../constants/globalConstansts";
 
 const styleCardsObj = {
   display: "grid",
@@ -28,7 +31,7 @@ const Accompaniments = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(accompanimentsActions.getCategories());
+    dispatch(categoriesActions.getCategories());
     dispatch(accompanimentsActions.getRecipes(category, searchValue, limit));
   }, [dispatch, limit, category, searchValue]);
 
@@ -58,6 +61,7 @@ const Accompaniments = () => {
               title={recipe.title}
               description={recipe.description}
               category={recipe.category}
+              recipeType={GLOBAL_RECIPES_TYPES.ACCOMPANIMENTS}
             />
           );
         })}

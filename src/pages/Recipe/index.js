@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
+import * as recipeActions from "../../store/recipe/recipeActions";
 import * as cartActions from "../../store/cart/cartActions";
 
 import {
@@ -16,16 +16,17 @@ import {
   ButtonsContainer,
   Button,
 } from "./styles";
+import { GLOBAL_RECIPES_TYPES } from "../../constants/globalConstansts";
 
 const Recipe = () => {
-  const { id } = useParams();
-  const { recipe } = useSelector((state) => state.mainDishes);
+  const { id, recipeType } = useParams();
+  const { recipe } = useSelector((state) => state.recipe);
   const dispatch = useDispatch();
   const history = useHistory();
 
   useEffect(() => {
-    dispatch(mainDishesActions.getRecipe(id));
-  }, [id, dispatch]);
+    dispatch(recipeActions.getRecipe(id, recipeType));
+  }, [id, recipeType, dispatch]);
 
   const handleClickAddOrRemoveRecipeToCart = () => {
     recipe.isRecipeInCart
@@ -36,8 +37,10 @@ const Recipe = () => {
   };
 
   const handleDeleteRecipe = () => {
-    dispatch(mainDishesActions.deleteRecipe(id));
-    history.push("/recipes");
+    dispatch(recipeActions.deleteRecipe(id, recipeType));
+    recipeType === GLOBAL_RECIPES_TYPES.MAIN_DISHES
+      ? history.push("/main_dishes")
+      : history.push("/accompaniments");
   };
 
   if (Object.keys(recipe).length === 0) {

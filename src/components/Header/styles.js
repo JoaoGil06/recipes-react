@@ -64,6 +64,18 @@ export const Tab = styled.div`
     ) {
       return "var(--greenGradient)";
     }
+
+    if (props.isActive && props.selectedCategory === RECIPES_TYPES.SALADAS) {
+      return "var(--greenGradient)";
+    }
+
+    if (props.isActive && props.selectedCategory === RECIPES_TYPES.MOLHOS) {
+      return "var(--orangeGrandient)";
+    }
+
+    if (props.isActive && props.selectedCategory === RECIPES_TYPES.CONSERVAS) {
+      return "var(--pinkGradient)";
+    }
   }};
 
   &:first-child {
@@ -86,6 +98,12 @@ export const Tab = styled.div`
           return "var(--blueGradient)";
         case RECIPES_TYPES.VEGETARIANO:
           return "var(--greenGradient)";
+        case RECIPES_TYPES.SALADAS:
+          return "var(--greenGradient)";
+        case RECIPES_TYPES.MOLHOS:
+          return "var(--orangeGrandient)";
+        case RECIPES_TYPES.CONSERVAS:
+          return "var(--pinkGradient)";
         default:
           return "#fff";
       }
@@ -122,6 +140,12 @@ export const TabCircle = styled.span`
         return "var(--blueGradient)";
       case RECIPES_TYPES.VEGETARIANO:
         return "var(--greenGradient)";
+      case RECIPES_TYPES.SALADAS:
+        return "var(--greenGradient)";
+      case RECIPES_TYPES.MOLHOS:
+        return "var(--orangeGrandient)";
+      case RECIPES_TYPES.CONSERVAS:
+        return "var(--pinkGradient)";
       default:
         return "#fff";
     }

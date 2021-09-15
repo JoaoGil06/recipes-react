@@ -17,8 +17,13 @@ const Navbar = () => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/mainDishes" activeClassName="active">
+            <NavLink to="/main_dishes" activeClassName="active">
               Pratos Principais
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/accompaniments" activeClassName="active">
+              Acompanhamentos
             </NavLink>
           </li>
           <li>
