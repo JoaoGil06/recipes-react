@@ -32,7 +32,7 @@ const Home = () => {
 
   return (
     <HomeContainer>
-      <Link to="/mainDishes">
+      <Link to="/main_dishes">
         <HorizontalCard
           gradient={{
             backgroundImage:

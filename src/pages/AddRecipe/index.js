@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
+import * as recipeActions from "../../store/recipe/recipeActions";
 import * as Yup from "yup";
 import CloudUpload from "../../assets/icons/cloudupload.svg";
 
@@ -14,19 +15,25 @@ import {
   InputLabel,
   InputText,
   InputSelect,
+  SelectOption,
   InputFile,
   InputLabelFile,
   InputTextArea,
   HR,
   Button,
 } from "./styles";
-import { RECIPES_TYPES } from "../../constants/globalConstansts";
+import {
+  GLOBAL_RECIPES_TYPES,
+  RECIPES_TYPES,
+} from "../../constants/globalConstansts";
+import * as categoriesActions from "../../store/categories/categoriesActions";
 
 const AddRecipe = () => {
   const [numOfIngredients, setNumOfIngredients] = useState([]);
   const [preparationSteps, setPreparationSteps] = useState([]);
   const [recipeData, setRecipeData] = useState({
     title: "",
+    recipeType: "main_dishes",
     category: "carne",
     description: "",
     image: {},
@@ -36,6 +43,11 @@ const AddRecipe = () => {
   const [formErrors, setFormErrors] = useState({});
 
   const dispatch = useDispatch();
+  const { categories } = useSelector((state) => state.categories);
+
+  useEffect(() => {
+    dispatch(categoriesActions.getCategories());
+  }, [dispatch]);
 
   const handleChangeNumberOfIngredients = (e) => {
     const quantity = parseInt(e.target.value);
@@ -75,6 +87,18 @@ const AddRecipe = () => {
         ...recipeData,
         image: files["0"],
       });
+    } else if (name.includes("recipeType")) {
+      value === "main_dishes"
+        ? setRecipeData({
+            ...recipeData,
+            [name]: value,
+            category: "carne",
+          })
+        : setRecipeData({
+            ...recipeData,
+            [name]: value,
+            category: "saladas",
+          });
     } else {
       setRecipeData({
         ...recipeData,
@@ -98,8 +122,25 @@ const AddRecipe = () => {
           field: "title",
           errorMessage: "Titulo obrigatório",
         }),
+        recipeType: Yup.mixed().oneOf(
+          [
+            GLOBAL_RECIPES_TYPES.MAIN_DISHES,
+            GLOBAL_RECIPES_TYPES.ACCOMPANIMENTS,
+          ],
+          {
+            field: "recipeType",
+            errorMessage: "Tipo de Receita obrigatória",
+          }
+        ),
         category: Yup.mixed().oneOf(
-          [RECIPES_TYPES.CARNE, RECIPES_TYPES.PEIXE, RECIPES_TYPES.VEGETARIANO],
+          [
+            RECIPES_TYPES.CARNE,
+            RECIPES_TYPES.PEIXE,
+            RECIPES_TYPES.VEGETARIANO,
+            RECIPES_TYPES.CONSERVAS,
+            RECIPES_TYPES.MOLHOS,
+            RECIPES_TYPES.SALADAS,
+          ],
           {
             field: "category",
             errorMessage: "Categoria obrigatória",
@@ -123,7 +164,7 @@ const AddRecipe = () => {
         abortEarly: false,
       });
 
-      dispatch(mainDishesActions.addRecipe(params));
+      dispatch(recipeActions.addRecipe(params));
     } catch (err) {
       let errors = {};
       err.errors.map((error) => {
@@ -157,6 +198,22 @@ const AddRecipe = () => {
         />
       </FormControl>
       <FormControl>
+        <InputLabel htmlFor="recipeType">
+          <h3>Tipo de Receita</h3>
+          {!!formErrors.recipeType && <span>{formErrors.recipeType}</span>}
+        </InputLabel>
+        <InputSelect
+          id="recipeType"
+          name="recipeType"
+          onChange={handleOnChange}
+          category={recipeData.category}
+          defaultValue={recipeData.recipeType}
+        >
+          <option value={"main_dishes"}>Pratos Principais</option>
+          <option value="accompaniments">Acompanhamentos</option>
+        </InputSelect>
+      </FormControl>
+      <FormControl>
         <InputLabel htmlFor="category">
           <h3>Categoria</h3>
           {!!formErrors.category && <span>{formErrors.category}</span>}
@@ -170,9 +227,25 @@ const AddRecipe = () => {
           category={recipeData.category}
           defaultValue={recipeData.category}
         >
-          <option value="carne">Carne</option>
-          <option value="peixe">Peixe</option>
-          <option value="vegetariano">Vegetariano</option>
+          {categories.length
+            ? recipeData.recipeType === GLOBAL_RECIPES_TYPES.MAIN_DISHES
+              ? categories[0].main_dishes.map(
+                  (category) =>
+                    category !== RECIPES_TYPES.TODOS && (
+                      <SelectOption value={category}>
+                        {category.replace(/^\w/, (c) => c.toUpperCase())}
+                      </SelectOption>
+                    )
+                )
+              : categories[0].accompaniments.map(
+                  (category) =>
+                    category !== RECIPES_TYPES.TODOS && (
+                      <SelectOption value={category}>
+                        {category.replace(/^\w/, (c) => c.toUpperCase())}
+                      </SelectOption>
+                    )
+                )
+            : null}
         </InputSelect>
       </FormControl>
       <FormControl>

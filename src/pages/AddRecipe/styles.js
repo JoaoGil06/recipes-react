@@ -91,6 +91,12 @@ export const InputText = styled.input`
         return "1px solid var(--fountainBlue);";
       case RECIPES_TYPES.VEGETARIANO:
         return "1px solid var(--limeade);";
+      case RECIPES_TYPES.MOLHOS:
+        return "1px solid var(--pastelOrange);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "1px solid var(--classicRose);";
+      case RECIPES_TYPES.SALADAS:
+        return "1px solid var(--limeade);";
       default:
         return "1px solid #fff";
     }
@@ -103,6 +109,12 @@ export const InputText = styled.input`
       case RECIPES_TYPES.PEIXE:
         return "0px 0px 15px 0px rgba(80, 167, 194, 0.65) ;";
       case RECIPES_TYPES.VEGETARIANO:
+        return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
+      case RECIPES_TYPES.MOLHOS:
+        return "0px 0px 15px 0px rgba(255, 179, 71, 0.65);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "0px 0px 15px 0px rgba(251, 211, 233, 0.65);";
+      case RECIPES_TYPES.SALADAS:
         return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
       default:
         return "0px 0px 15px 0px rgba(255, 255, 255, 0.65)";
@@ -134,6 +146,12 @@ export const InputTextArea = styled.textarea`
         return "1px solid var(--fountainBlue);";
       case RECIPES_TYPES.VEGETARIANO:
         return "1px solid var(--limeade);";
+      case RECIPES_TYPES.MOLHOS:
+        return "1px solid var(--pastelOrange);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "1px solid var(--classicRose);";
+      case RECIPES_TYPES.SALADAS:
+        return "1px solid var(--limeade);";
       default:
         return "1px solid #fff";
     }
@@ -146,6 +164,12 @@ export const InputTextArea = styled.textarea`
       case RECIPES_TYPES.PEIXE:
         return "0px 0px 15px 0px rgba(80, 167, 194, 0.65) ;";
       case RECIPES_TYPES.VEGETARIANO:
+        return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
+      case RECIPES_TYPES.MOLHOS:
+        return "0px 0px 15px 0px rgba(255, 179, 71, 0.65);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "0px 0px 15px 0px rgba(251, 211, 233, 0.65);";
+      case RECIPES_TYPES.SALADAS:
         return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
       default:
         return "0px 0px 15px 0px rgba(255, 255, 255, 0.65)";
@@ -176,6 +200,12 @@ export const InputSelect = styled.select`
         return "1px solid var(--fountainBlue);";
       case RECIPES_TYPES.VEGETARIANO:
         return "1px solid var(--limeade);";
+      case RECIPES_TYPES.MOLHOS:
+        return "1px solid var(--pastelOrange);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "1px solid var(--classicRose);";
+      case RECIPES_TYPES.SALADAS:
+        return "1px solid var(--limeade);";
       default:
         return "1px solid #fff";
     }
@@ -188,6 +218,12 @@ export const InputSelect = styled.select`
       case RECIPES_TYPES.PEIXE:
         return "0px 0px 15px 0px rgba(80, 167, 194, 0.65) ;";
       case RECIPES_TYPES.VEGETARIANO:
+        return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
+      case RECIPES_TYPES.MOLHOS:
+        return "0px 0px 15px 0px rgba(255, 179, 71, 0.65);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "0px 0px 15px 0px rgba(251, 211, 233, 0.65);";
+      case RECIPES_TYPES.SALADAS:
         return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
       default:
         return "0px 0px 15px 0px rgba(255, 255, 255, 0.65)";
@@ -215,6 +251,12 @@ export const InputLabelFile = styled.label`
         return "0px 0px 15px 0px rgba(80, 167, 194, 0.65) ;";
       case RECIPES_TYPES.VEGETARIANO:
         return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
+      case RECIPES_TYPES.MOLHOS:
+        return "0px 0px 15px 0px rgba(255, 179, 71, 0.65);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "0px 0px 15px 0px rgba(251, 211, 233, 0.65);";
+      case RECIPES_TYPES.SALADAS:
+        return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
       default:
         return "0px 0px 15px 0px rgba(255, 255, 255, 0.65)";
     }
@@ -226,6 +268,12 @@ export const InputLabelFile = styled.label`
       case RECIPES_TYPES.PEIXE:
         return "1px solid var(--fountainBlue);";
       case RECIPES_TYPES.VEGETARIANO:
+        return "1px solid var(--limeade);";
+      case RECIPES_TYPES.MOLHOS:
+        return "1px solid var(--pastelOrange);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "1px solid var(--classicRose);";
+      case RECIPES_TYPES.SALADAS:
         return "1px solid var(--limeade);";
       default:
         return "1px solid #fff";
@@ -280,5 +328,12 @@ export const Button = styled.button`
 
   &:focus {
     outline: none !important;
+  }
+`;
+
+export const SelectOption = styled.option`
+  text-transform: capitalize;
+  span {
+    text-transform: capitalize;
   }
 `;

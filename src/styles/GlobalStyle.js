@@ -5,9 +5,13 @@ export const GlobalStyle = createGlobalStyle`
   --redGradient: linear-gradient(to right, #ec8c69 0%, #ee609c 100%);
   --blueGradient: linear-gradient(to right, #b7f8db 0%, #5aafc5 100%, #50a7c2 100%);
   --greenGradient: linear-gradient(to right, #9be15d 0%, #00e3ae 100%);
+  --orangeGrandient: linear-gradient(to right, #ffb347, #ffcc33);
+  --pinkGradient: linear-gradient(to right, #fbd3e9, #bb377d);;
   --brilliantRose: #ee609c;
   --fountainBlue: #50a7c2;
   --limeade: #58bd00;
+  --pastelOrange: #ffb347;
+  --classicRose: #fbd3e9;
   }
 
 * {

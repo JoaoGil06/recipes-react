@@ -59,6 +59,12 @@ export const CardInfo = styled.div`
         return "var(--blueGradient)";
       case RECIPES_TYPES.VEGETARIANO:
         return "var(--greenGradient)";
+      case RECIPES_TYPES.SALADAS:
+        return "var(--greenGradient)";
+      case RECIPES_TYPES.MOLHOS:
+        return "var(--orangeGrandient)";
+      case RECIPES_TYPES.CONSERVAS:
+        return "var(--pinkGradient)";
       default:
         return "#fff";
     }

@@ -22,13 +22,13 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/mainDishes" exact>
+        <Route path="/main_dishes" exact>
           <MainDishes />
         </Route>
         <Route path="/recipes/add" exact>
           <AddRecipe />
         </Route>
-        <Route path="/recipes/:id" exact>
+        <Route path="/recipes/:recipeType/:id" exact>
           <Recipe />
         </Route>
         <Route exact path="/accompaniments">

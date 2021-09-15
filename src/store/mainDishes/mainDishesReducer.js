@@ -1,7 +1,10 @@
 import * as actionTypes from "./mainDishesActionTypes";
 import initialState from "./mainDishesInitialState";
+import * as categoriesActionTypes from "../categories/categoriesActionTypes";
+import * as recipeActionTypes from "../recipe/recipeActionTypes";
 
 import { combineReducers } from "redux";
+import { GLOBAL_RECIPES_TYPES } from "../../constants/globalConstansts";
 
 export const isLoadingRecipes = (
   state = initialState.isLoadingRecipes,
@@ -28,14 +31,22 @@ export const recipes = (state = initialState.recipes, action = {}) => {
         values: action.payload.recipes,
         total: action.payload.totalRecipes,
       };
-    case actionTypes.DELETE_MD_RECIPE_SUCCESS:
-      const { id, recipes } = action.payload;
-      const newRecipes = recipes["values"].filter((recipe) => recipe.id !== id);
+    case recipeActionTypes.DELETE_RECIPE_SUCCESS:
+      const { id, recipes, recipe_type } = action.payload;
 
-      return {
-        values: newRecipes,
-        total: recipes.total - 1,
-      };
+      if (recipe_type === GLOBAL_RECIPES_TYPES.MAIN_DISHES) {
+        const newRecipes = recipes["values"].filter(
+          (recipe) => recipe.id !== id
+        );
+
+        return {
+          values: newRecipes,
+          total: recipes.total - 1,
+        };
+      } else {
+        return state;
+      }
+
     default:
       return state;
   }
@@ -58,11 +69,11 @@ export const isLoadingCategories = (
   action
 ) => {
   switch (action.type) {
-    case actionTypes.GET_MD_CATEGORIES_START:
+    case categoriesActionTypes.GET_CATEGORIES_START:
       return true;
-    case actionTypes.GET_MD_CATEGORIES_FAIL:
+    case categoriesActionTypes.GET_CATEGORIES_FAIL:
       return false;
-    case actionTypes.GET_MD_CATEGORIES_SUCCESS:
+    case categoriesActionTypes.GET_CATEGORIES_SUCCESS:
       return false;
     default:
       return state;
@@ -71,8 +82,9 @@ export const isLoadingCategories = (
 
 export const categories = (state = initialState.categories, action = {}) => {
   switch (action.type) {
-    case actionTypes.GET_MD_CATEGORIES_SUCCESS:
-      return action.payload;
+    case categoriesActionTypes.GET_CATEGORIES_SUCCESS:
+      const { main_dishes } = action.payload[0];
+      return main_dishes;
     default:
       return state;
   }
@@ -90,16 +102,6 @@ export const filters = (state = initialState.filters, action = {}) => {
   }
 };
 
-export const recipe = (state = initialState.recipe, action = {}) => {
-  switch (action.type) {
-    case actionTypes.GET_MD_RECIPE_SUCCESS:
-      return action.payload;
-
-    default:
-      return state;
-  }
-};
-
 export default combineReducers({
   isLoadingRecipes,
   totalRecipes: recipesCount,
@@ -107,5 +109,4 @@ export default combineReducers({
   isLoadingCategories,
   categories,
   filters,
-  recipe,
 });
