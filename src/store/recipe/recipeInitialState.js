@@ -7,6 +7,7 @@ const initialState = {
   preparationSteps: [],
   searchKeys: [],
   isRecipeInCart: false,
+  isLoading: false,
 };
 
 export default initialState;

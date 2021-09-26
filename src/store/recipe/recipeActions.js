@@ -1,8 +1,12 @@
 import * as actionTypes from "./recipeActionTypes";
+import * as toastActions from "../toast/toastActions";
 import { storage } from "../../firebase";
 
 import { db } from "../../firebase";
-import { GLOBAL_RECIPES_TYPES } from "../../constants/globalConstansts";
+import {
+  GLOBAL_RECIPES_TYPES,
+  TOAST_TYPES,
+} from "../../constants/globalConstansts";
 
 export const getRecipeStart = () => {
   return { type: actionTypes.GET_RECIPE_START };
@@ -14,6 +18,18 @@ export const getRecipeSuccess = (recipe) => {
 
 export const getRecipeFail = (error) => {
   return { type: actionTypes.GET_RECIPE_FAIL, payload: error };
+};
+
+export const addRecipeStart = () => {
+  return { type: actionTypes.ADD_RECIPE_START };
+};
+
+export const addRecipeSuccess = () => {
+  return { type: actionTypes.ADD_RECIPE_SUCCESS };
+};
+
+export const addRecipeFail = () => {
+  return { type: actionTypes.ADD_RECIPE_FAIL };
 };
 
 export const deleteRecipeStart = () => {
@@ -80,8 +96,24 @@ export const deleteRecipe = (id, recipe_type) => async (dispatch, getState) => {
       recipes = getState().accompaniments.recipes;
     }
     dispatch(deleteRecipeSuccess(id, recipes, recipe_type));
+    dispatch(
+      toastActions.sendToast({
+        type: TOAST_TYPES.SUCCESS,
+        title: "Receita Apagada",
+        message: `A receita foi apagada com sucesso.`,
+        show: true,
+      })
+    );
   } catch (error) {
     dispatch(deleteRecipeFail(error));
+    dispatch(
+      toastActions.sendToast({
+        type: TOAST_TYPES.ERROR,
+        title: "Erro ao apagar a receita",
+        message: "A receita não foi apagada, tente novamente.",
+        show: true,
+      })
+    );
   }
 };
 
@@ -130,6 +162,7 @@ export const addRecipe =
   }) =>
   async (dispatch, getState) => {
     try {
+      dispatch(addRecipeStart());
       const searchKeys = convertTitleToSearchKeys(title.toLowerCase());
       const responseImage = await uploadImage(image);
       const url = await responseImage.ref
@@ -157,7 +190,27 @@ export const addRecipe =
           searchKeys,
         });
       }
+
+      dispatch(
+        toastActions.sendToast({
+          type: TOAST_TYPES.SUCCESS,
+          title: "Receita Adicionada",
+          message: `A receita ${title} foi adicionada com sucesso.`,
+          show: true,
+        })
+      );
+
+      dispatch(addRecipeSuccess());
     } catch (error) {
-      console.log(error);
+      dispatch(
+        toastActions.sendToast({
+          type: TOAST_TYPES.ERROR,
+          title: "Erro ao adicionar a receita",
+          message: "A receita não foi adicionada, tente novamente.",
+          show: true,
+        })
+      );
+
+      dispatch(addRecipeFail());
     }
   };

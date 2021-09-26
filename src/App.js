@@ -1,7 +1,9 @@
 import React from "react";
 import "./App.css";
 
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+
+import { useSelector } from "react-redux";
 
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -12,8 +14,11 @@ import AddRecipe from "./pages/AddRecipe";
 import Cart from "./pages/Cart";
 
 import { GlobalStyle } from "./styles/GlobalStyle";
+import Toast from "./components/Toast";
 
 function App() {
+  const { toast } = useSelector((state) => state.toast);
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -38,6 +43,14 @@ function App() {
           <Cart />
         </Route>
       </Switch>
+      {toast.show && (
+        <Toast
+          type={toast.type}
+          title={toast.title}
+          message={toast.message}
+          show={toast.show}
+        />
+      )}
       <GlobalStyle />
     </BrowserRouter>
   );

@@ -65,24 +65,62 @@ const Cart = () => {
       (cartItem) => cartItem.category === RECIPES_TYPES.VEGETARIANO
     ).length;
 
+    const cartSaladasCount = cart.filter(
+      (cartItem) => cartItem.category === RECIPES_TYPES.SALADAS
+    ).length;
+
+    const cartMolhosCount = cart.filter(
+      (cartItem) => cartItem.category === RECIPES_TYPES.MOLHOS
+    ).length;
+
+    const cartConservasCount = cart.filter(
+      (cartItem) => cartItem.category === RECIPES_TYPES.CONSERVAS
+    ).length;
+
     return (
       <CartHeader>
         <h1>Carrinho de Receitas</h1>
         <CartHeaderSummary>
-          <SummaryCategory>
-            <h3>Carne</h3>
-            <h4>{cartCarneCount}</h4>
-          </SummaryCategory>
+          {cartCarneCount > 0 && (
+            <SummaryCategory>
+              <h3>Carne</h3>
+              <h4>{cartCarneCount}</h4>
+            </SummaryCategory>
+          )}
+          {cartPeixeCount > 0 && (
+            <SummaryCategory>
+              <h3>Peixe</h3>
+              <h4>{cartPeixeCount}</h4>
+            </SummaryCategory>
+          )}
 
-          <SummaryCategory>
-            <h3>Peixe</h3>
-            <h4>{cartPeixeCount}</h4>
-          </SummaryCategory>
+          {cartVegetarianosCount > 0 && (
+            <SummaryCategory>
+              <h3>Vegetariano</h3>
+              <h4>{cartVegetarianosCount}</h4>
+            </SummaryCategory>
+          )}
 
-          <SummaryCategory>
-            <h3>Vegetariano</h3>
-            <h4>{cartVegetarianosCount}</h4>
-          </SummaryCategory>
+          {cartSaladasCount > 0 && (
+            <SummaryCategory>
+              <h3>Saladas</h3>
+              <h4>{cartSaladasCount}</h4>
+            </SummaryCategory>
+          )}
+
+          {cartMolhosCount > 0 && (
+            <SummaryCategory>
+              <h3>Molhos</h3>
+              <h4>{cartMolhosCount}</h4>
+            </SummaryCategory>
+          )}
+
+          {cartConservasCount > 0 && (
+            <SummaryCategory>
+              <h3>Conservas</h3>
+              <h4>{cartConservasCount}</h4>
+            </SummaryCategory>
+          )}
         </CartHeaderSummary>
       </CartHeader>
     );

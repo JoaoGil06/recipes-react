@@ -10,12 +10,16 @@ export const CartPageContainer = styled.div`
 
 export const CartHeader = styled.div`
   margin-top: 5rem;
+  width: 40rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
 `;
 
 export const CartHeaderSummary = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
 `;
 
 export const SummaryCategory = styled.div`
@@ -23,6 +27,10 @@ export const SummaryCategory = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  &:not(:last-child) {
+    margin-right: 2rem;
+  }
 `;
 
 export const CartContainer = styled.div`
@@ -55,6 +63,12 @@ export const CartItem = styled.div`
         return "1px solid var(--fountainBlue);";
       case RECIPES_TYPES.VEGETARIANO:
         return "1px solid var(--limeade);";
+      case RECIPES_TYPES.MOLHOS:
+        return "1px solid var(--pastelOrange);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "1px solid var(--classicRose);";
+      case RECIPES_TYPES.SALADAS:
+        return "1px solid var(--limeade);";
       default:
         return "1px solid#fff";
     }
@@ -67,6 +81,12 @@ export const CartItem = styled.div`
       case RECIPES_TYPES.PEIXE:
         return "0px 0px 15px 0px rgba(80, 167, 194, 0.65) ;";
       case RECIPES_TYPES.VEGETARIANO:
+        return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
+      case RECIPES_TYPES.MOLHOS:
+        return "0px 0px 15px 0px rgba(255, 179, 71, 0.65);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "0px 0px 15px 0px rgba(251, 211, 233, 0.65);";
+      case RECIPES_TYPES.SALADAS:
         return "0px 0px 15px 0px rgba(88, 189, 0, 0.65);";
       default:
         return "0px 0px 15px 0px rgba(255, 255, 255, 0.65)";
@@ -91,6 +111,12 @@ export const CartItemName = styled.h2`
       case RECIPES_TYPES.PEIXE:
         return "var(--fountainBlue);";
       case RECIPES_TYPES.VEGETARIANO:
+        return "var(--limeade);";
+      case RECIPES_TYPES.MOLHOS:
+        return "var(--pastelOrange);";
+      case RECIPES_TYPES.CONSERVAS:
+        return "var(--classicRose);";
+      case RECIPES_TYPES.SALADAS:
         return "var(--limeade);";
       default:
         return "#fff";
