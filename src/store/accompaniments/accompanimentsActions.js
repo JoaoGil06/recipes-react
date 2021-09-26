@@ -1,5 +1,4 @@
 import * as actionTypes from "./accompanimentsActionTypes";
-import { storage } from "../../firebase";
 
 import { db } from "../../firebase";
 import { RECIPES_TYPES } from "../../constants/globalConstansts";

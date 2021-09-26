@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import * as mainDishesActions from "../../store/mainDishes/mainDishesActions";
 import * as recipeActions from "../../store/recipe/recipeActions";
 import * as Yup from "yup";
 import CloudUpload from "../../assets/icons/cloudupload.svg";
+import { useHistory } from "react-router-dom";
 
 import {
   AddRecipeContainer,
@@ -27,6 +27,7 @@ import {
   RECIPES_TYPES,
 } from "../../constants/globalConstansts";
 import * as categoriesActions from "../../store/categories/categoriesActions";
+import Loading from "../../components/Loading";
 
 const AddRecipe = () => {
   const [numOfIngredients, setNumOfIngredients] = useState([]);
@@ -44,10 +45,23 @@ const AddRecipe = () => {
 
   const dispatch = useDispatch();
   const { categories } = useSelector((state) => state.categories);
+  const { isLoading } = useSelector((state) => state.recipe);
+  const { toast } = useSelector((state) => state.toast);
+
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(categoriesActions.getCategories());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("isLoading", isLoading);
+    if (!isLoading && !!toast.type) {
+      recipeData.recipeType === GLOBAL_RECIPES_TYPES.MAIN_DISHES
+        ? history.push("/main_dishes")
+        : history.push("/accompaniments");
+    }
+  }, [isLoading, history, recipeData.recipeType, toast.type]);
 
   const handleChangeNumberOfIngredients = (e) => {
     const quantity = parseInt(e.target.value);
@@ -168,7 +182,7 @@ const AddRecipe = () => {
     } catch (err) {
       let errors = {};
       err.errors.map((error) => {
-        errors[error.field] = error.errorMessage;
+        return (errors[error.field] = error.errorMessage);
       });
 
       setFormErrors(errors);
@@ -353,7 +367,7 @@ const AddRecipe = () => {
   return (
     <AddRecipeContainer>
       {renderTitle()}
-      {renderForm()}
+      {isLoading ? <Loading /> : renderForm()}
     </AddRecipeContainer>
   );
 };

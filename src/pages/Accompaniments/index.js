@@ -3,7 +3,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import Header from "../../components/Header";
 import Card from "../../components/Card";
 
-import { AccompanimentsContainer, EndLoaderMessage } from "./styles";
+import { AccompanimentsContainer } from "./styles";
 
 import { useSelector, useDispatch } from "react-redux";
 import * as accompanimentsActions from "../../store/accompaniments/accompanimentsActions";
@@ -14,6 +14,7 @@ import {
   GLOBAL_RECIPES_TYPES,
   RECIPES_TYPES,
 } from "../../constants/globalConstansts";
+import Loading from "../../components/Loading";
 
 const styleCardsObj = {
   display: "grid",
@@ -27,7 +28,9 @@ const Accompaniments = () => {
   const [limit, setLimit] = useState(9);
   const [category, setCategory] = useState(RECIPES_TYPES.TODOS);
   const [searchValue, setSearchValue] = useState("");
-  const { recipes, categories } = useSelector((state) => state.accompaniments);
+  const { recipes, categories, isLoadingRecipes } = useSelector(
+    (state) => state.accompaniments
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -50,7 +53,7 @@ const Accompaniments = () => {
         dataLength={recipes.length}
         next={() => setLimit(limit + 3)}
         hasMore={recipes.length < totalRecipes}
-        loader={<h4>A Carregar...</h4>}
+        loader={<Loading />}
       >
         {recipes.map((recipe) => {
           return (
@@ -81,13 +84,12 @@ const Accompaniments = () => {
     <>
       {renderHeader()}
       <Search handleSearch={handleSearch} />
-      <AccompanimentsContainer>
-        {recipes.values && renderCards(recipes.values, recipes.total)}
-      </AccompanimentsContainer>
-      {recipes.values?.length === recipes.total ? (
-        <EndLoaderMessage>Não existem mais receitas</EndLoaderMessage>
+      {isLoadingRecipes && limit <= 9 ? (
+        <Loading />
       ) : (
-        ""
+        <AccompanimentsContainer>
+          {recipes.values && renderCards(recipes.values, recipes.total)}
+        </AccompanimentsContainer>
       )}
     </>
   );

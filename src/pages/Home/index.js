@@ -64,8 +64,8 @@ const Home = () => {
           }}
           title="Adicionar Receita"
           icon={RecipeBook}
-          quantity={cart.length}
-          description="disponíveis"
+          quantity={"+"}
+          description="nova receita"
         />
       </Link>
 
