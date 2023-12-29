@@ -1,0 +1,5 @@
+export const ADD_RECIPE_TO_CART = "ADD_RECIPE_TO_CART";
+
+export const REMOVE_RECIPE_FROM_CART = "REMOVE_RECIPE_FROM_CART";
+
+export const CLEAN_CART = "CLEAN_CART";
