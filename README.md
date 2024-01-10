@@ -2,7 +2,7 @@
 
 - This is a project where you can manage your cooking recipes and at the end export your ingredients to make a shopping list
 
-### [Click here to see the live demo](https://vercel.com/joao-gils-projects/recipes-react)
+### [Click here to see the live demo](https://recipes-react-mu.vercel.app/)
 
 # Getting Started
 
