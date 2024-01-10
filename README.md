@@ -1,8 +1,15 @@
-# React + Vite
+# React Recipes
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- This is a project where you can manage your cooking recipes and at the end export your ingredients to make a shopping list
 
-Currently, two official plugins are available:
+### [Click here to see the live demo](https://vercel.com/joao-gils-projects/recipes-react)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Getting Started
+
+1. Clone this repo using git clone [https://github.com/JoaoGil06/recipes-react.git](https://github.com/JoaoGil06/recipes-react)
+1. Move yourself to the appropriate directory: cd github-dashboard-users
+1. Run yarn install or npm install to install dependencies
+
+# Contributing
+
+Please feel free to send pull request if you want to contribute 😁🚀
